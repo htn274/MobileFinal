@@ -6,4 +6,5 @@
     <color name="White">#ffffff</color>
     <color name="bgBottomNavigation">#ff9900</color>
 
+    <color name="tabSelected">#ff9900</color>
 </resources>

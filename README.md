@@ -61,7 +61,8 @@
  - quantity:
  - weight:
  - variation:
-  
+  ```
   + color 
-  + s
+  + size
+  ```
 

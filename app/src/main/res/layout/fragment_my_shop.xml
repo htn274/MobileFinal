@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyShopFragment">
 
+    <Button
+        android:text="Add New Shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_add_circle"
+        android:drawablePadding="15dp"
+        android:background="@color/White"
+        android:id="@+id/button_addShop"
+        android:paddingRight="10dp"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_below="@+id/button_addShop">
     </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+</RelativeLayout>

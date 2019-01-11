@@ -47,6 +47,7 @@
 2. Shop
 - owner: user id
 - shopName
+- address: chuỗi
 - location: Lng
 - avatar
 - openHour

@@ -12,14 +12,14 @@
         android:drawableLeft="@drawable/ic_add_circle"
         android:drawablePadding="15dp"
         android:background="@color/White"
-        android:id="@+id/button_addShop"
+        android:id="@+id/btn_addShop"
         android:paddingRight="10dp"
         />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/button_addShop">
+        android:layout_below="@+id/btn_addShop">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

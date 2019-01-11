@@ -21,7 +21,7 @@
 - Chọn mua, là có thông báo đến chủ shop đó
 - Chat giữa người mua và chủ shop (nếu muốn =]] )
 - Shopping planner: lên kế hoạch đi shopping (Để sau)
-#Các màn hình chính:
+# Các màn hình chính:
 1. Màn hình sign in / sign up
 2. Màn hình trang chủ:
 - Thanh search 
@@ -37,4 +37,32 @@
 5. Màn hình chi tiết shop
 6. Màn hình chi tiết sản phẩm 
 7. Màn hình tất cả các sản phẩm (có filter)
+
+# Database 
+1. User 
+- avatar
+- userName 
+- name 
+- password
+2. Shop
+- owner: user id
+- shopName
+- location: Lng
+- avatar
+- openHour
+- closeHour
+3. Item:
+- shop:
+- name:
+- description:
+- category:
+- price:
+- image:
+ - quantity:
+ - weight:
+ - variation:
+  ```
+  + color 
+  + size
+  ```
 

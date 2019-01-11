@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "157506098983",
+    "firebase_url": "https://mobilefinal-bcdd1.firebaseio.com",
+    "project_id": "mobilefinal-bcdd1",
+    "storage_bucket": "mobilefinal-bcdd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157506098983:android:55ab5a478409be63",
+        "android_client_info": {
+          "package_name": "com.example.root.mobilefinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157506098983-stl11ii23jid027fql6i7793v6dvunk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-TCVno1l_OCVWVY0Dr5G3ZcjQCp6OtP4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

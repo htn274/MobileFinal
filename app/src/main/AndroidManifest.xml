@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.root.mobilefinal">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,7 +21,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".Signup"></activity>
+
+        <activity android:name=".Signup" />
+        <activity android:name=".ShopDetail" />
+        <activity android:name=".AddShopForm" />
+        <activity android:name=".AddItem">
+            <!--<meta-data tools:replace="android:value"></meta-data>-->
+        </activity>
     </application>
 
 </manifest>

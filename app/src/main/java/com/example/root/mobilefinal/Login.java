@@ -21,25 +21,26 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import java.util.concurrent.TimeUnit;
+public class Login extends AppCompatActivity implements View.OnClickListener{
 
-import static android.content.ContentValues.TAG;
+    Button btn_login;
+    EditText editText_username, editText_password;
+    TextView signup;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
-    Button btnSignIn;
-    EditText editTextPhoneNumber;
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FirebaseApp.initializeApp(this);
-        editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
-        auth = FirebaseAuth.getInstance();
-
-        btnSignIn = findViewById(R.id.btn_login);
-        btnSignIn.setOnClickListener(this);
+        setView();
     }
 
     void signInWithEmailPassword(String email, String password) {
@@ -52,7 +53,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("btag", "signInWithCredential:success");
 
-                            FirebaseUser user = task.getResult().getUser();
+//                            FirebaseUser user = task.getResult().getUser();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -66,10 +70,36 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 });
     }
 
+
+    private void setView() {
+        FirebaseApp.initializeApp(this);
+        auth = FirebaseAuth.getInstance();
+
+
+        editText_username = findViewById(R.id.editText_email);
+        editText_password = findViewById(R.id.editText_password);
+        assert editText_username != null;
+        assert editText_password != null;
+
+        btn_login = findViewById(R.id.btn_login);
+        btn_login.setOnClickListener((View.OnClickListener) this);
+
+        signup = findViewById(R.id.tv_signup);
+        signup.setOnClickListener((View.OnClickListener) this);
+    }
+
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.btn_login) {
-            signInWithEmailPassword("baosws@gmail.com", "123456");
+    public void onClick(View view) {
+        if (view == btn_login) {
+            assert editText_username != null;
+            assert editText_password != null;
+            Log.d("btag", editText_username.getText().toString());
+            Log.d("btag", editText_password.getText().toString());
+            signInWithEmailPassword(editText_username.getText().toString(), editText_password.getText().toString());
+        }
+        else if (view == signup) {
+            Intent intent = new Intent(getApplicationContext(), Signup.class);
+            startActivity(intent);
         }
     }
 }

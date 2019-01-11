@@ -16,12 +16,12 @@
         android:id="@+id/logo"/>
 
     <EditText
-        android:id="@+id/editText_username"
+        android:id="@+id/editText_email"
         android:layout_width="277dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:background="@drawable/border_edittext"
-        android:hint="User name"
+        android:hint="Email"
         android:inputType="text"
         android:textAlignment="center"
         android:layout_below="@+id/logo"
@@ -36,7 +36,7 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:textAlignment="center"
-        android:layout_below="@+id/editText_username"
+        android:layout_below="@+id/editText_email"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="10dp"

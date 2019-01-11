@@ -67,7 +67,7 @@
             android:layout_gravity="center"
             android:background="@drawable/border_edittext"
             android:hint="User name"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:textAlignment="center"
             android:layout_marginTop="10dp"/>
 

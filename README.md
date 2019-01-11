@@ -21,7 +21,7 @@
 - Chọn mua, là có thông báo đến chủ shop đó
 - Chat giữa người mua và chủ shop (nếu muốn =]] )
 - Shopping planner: lên kế hoạch đi shopping (Để sau)
-#Các màn hình chính:
+# Các màn hình chính:
 1. Màn hình sign in / sign up
 2. Màn hình trang chủ:
 - Thanh search 
@@ -61,6 +61,7 @@
  - quantity:
  - weight:
  - variation:
- + color 
- + s
+  
+  + color 
+  + s
 

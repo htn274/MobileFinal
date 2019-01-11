@@ -80,6 +80,7 @@
         android:layout_height="wrap_content"
         android:text="Not a member? Sign up now."
         android:layout_below="@+id/btn_login"
+        android:id="@+id/tv_signup"
         android:layout_centerHorizontal="true"
         android:textSize="20dp"
         android:layout_marginTop="20dp"/>

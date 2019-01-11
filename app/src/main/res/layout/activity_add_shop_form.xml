@@ -18,7 +18,7 @@
             android:layout_height="200dp"
             android:id="@+id/imageView_avatarShop"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/profile_default"/>
+            android:src="@mipmap/ic_launcher"/>
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"

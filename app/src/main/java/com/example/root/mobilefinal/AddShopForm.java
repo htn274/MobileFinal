@@ -2,34 +2,66 @@ package com.example.root.mobilefinal;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-public class AddShopForm extends AppCompatActivity implements View.OnClickListener {
+import com.bumptech.glide.Glide;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
+import java.io.ByteArrayOutputStream;
+
+public class AddShopForm extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     ImageView avatar;
     Button btn_uploadAvatar, btn_next;
     EditText editText_shopName, editText_location, editText_openHour, editText_closeHour;
+    private GoogleApiClient mGoogleApiClient;
+    private static final int PLACE_PICKER_REQUEST = 1;
+    private static final int PICK_IMAGE_ID = 2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_shop_form);
         AddShopForm.this.setTitle("New Shop");
         initView();
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
     }
 
     void initView(){
         avatar = findViewById(R.id.imageView_avatarShop);
+
         btn_uploadAvatar = findViewById(R.id.btn_uploadAvatar);
         btn_uploadAvatar.setOnClickListener((View.OnClickListener) this);
+
         btn_next = findViewById(R.id.btn_nextStep);
+
         editText_shopName = findViewById(R.id.editText_shopname);
+
         editText_location = findViewById(R.id.editText_location);
+        editText_location.setOnClickListener(this);
+        editText_location.setInputType(InputType.TYPE_NULL);
 
         editText_openHour = findViewById(R.id.editText_openHour);
         editText_openHour.setInputType(InputType.TYPE_NULL);
@@ -43,6 +75,16 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
         if (view == btn_uploadAvatar){
             onPickImage(view);
         }
+        else if (view == editText_location){
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            Log.d("Nunu", "onClick: Location");
+            try {
+                startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+                Log.d("Nunu", "onClick: Location");
+            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     void setTime(){
@@ -51,11 +93,17 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
     }
 
 //    Choose image
-    private static final int PICK_IMAGE_ID = 234; // the number doesn't matter
 
     public void onPickImage(View view) {
         Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
         startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+    }
+
+    private byte[] bitmapToByte(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 
     @Override
@@ -64,8 +112,25 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
             case PICK_IMAGE_ID:
                 Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
                 // TODO use bitmap
-                avatar.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 200,200, false));
+                Glide.
+                        with(this)
+                        .load(bitmapToByte(bitmap))
+                        .asBitmap()
+                        .override(200,200)
+                        .centerCrop()
+                        .into(avatar);
                 break;
+            case PLACE_PICKER_REQUEST: {
+                if (resultCode == RESULT_OK) {
+                    Place place = PlacePicker.getPlace(data, this);
+                    StringBuilder stBuilder = new StringBuilder();
+                    String placename = String.format("%s", place.getName());
+                    String latitude = String.valueOf(place.getLatLng().latitude);
+                    String longitude = String.valueOf(place.getLatLng().longitude);
+                    String address = String.format("%s", place.getAddress());
+                    editText_location.setText(address);
+                }
+            }
             default:
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
@@ -76,4 +141,22 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Connection failed", Toast.LENGTH_LONG).show();
+    }
+
 }

@@ -38,3 +38,29 @@
 6. Màn hình chi tiết sản phẩm 
 7. Màn hình tất cả các sản phẩm (có filter)
 
+#Database 
+1. User 
+- avatar
+- userName 
+- name 
+- password
+2. Shop
+- owner: user id
+- shopName
+- location: Lng
+- avatar
+- openHour
+- closeHour
+3. Item:
+- shop:
+- name:
+- description:
+- category:
+- price:
+- image:
+ - quantity:
+ - weight:
+ - variation:
+ + color 
+ + s
+

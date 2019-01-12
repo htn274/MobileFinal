@@ -49,35 +49,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
         setView();
     }
-    void signInWithPhoneCredential(PhoneAuthCredential phoneAuthCredential) {
-        auth.signInWithCredential(phoneAuthCredential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_LONG).show();
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("btag", "signInWithCredential:success");
 
-                            FirebaseUser user = task.getResult().getUser();
-                            Log.d("btag", "display name " + user.getDisplayName());
-                            Log.d("btag", "uid " + user.getUid());
-
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                            // ...
-                        } else {
-                            // Sign in failed, display a message and update the UI
-                            Log.w("btag", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Login faled", Toast.LENGTH_LONG).show();
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
-                            }
-                        }
-                    }
-                });
-    }
     void signInWithEmailPassword(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -141,4 +113,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             startActivity(intent);
         }
     }
+
 }

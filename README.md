@@ -37,31 +37,26 @@
 7. Màn hình tất cả các sản phẩm (có filter)
 
 # Database 
-1. User 
-- avatar
-- userName 
-- name 
-- password
+1. User
+- uid
+- name
 2. Shop
-- owner: user id
+- owner: uid
 - shopName
 - address: chuỗi
-- location: Lng
-- avatar
-- openHour
-- closeHour
+- location: lat lng
+- open_hour
+- close_hour
 3. Item:
-- shop:
+- iid
+- shop: sid
 - name:
 - description:
 - category:
 - price:
 - image:
- - quantity:
- - weight:
- - variation:
-  ```
-  + color 
-  + size
-  ```
-
+- quantity:
+- weight:
+- variation:
+    + color 
+    + size

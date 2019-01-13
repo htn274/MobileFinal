@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShopListItems">
+    tools:context=".ShopListItemsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_shopItem"
+        layout_constraintLeft_toLeftOf="parent"
+        layout_constraintRight_toRightOf="parent"
+        layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:layout_editor_absoluteX="227dp"
+        tools:layout_editor_absoluteY="40dp"></android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+
+</RelativeLayout>

@@ -4,11 +4,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import java.util.ArrayList;
+
 public class PageAdapter extends FragmentStatePagerAdapter {
 
     PageAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
+
+
     @Override
     public Fragment getItem(int position) {
         Fragment frag=null;

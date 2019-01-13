@@ -1,9 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ShopDetail">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile_header"
+        android:id="@+id/shop_header"
+        android:orientation="horizontal">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/shop_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/profile1"
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="@color/White"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_heart"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/btn_like"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_directions"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/btn_getDirection"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:id="@+id/tv_shopName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shop name"
+                    android:textColor="@color/White"
+                    android:textSize="25dp"
+                    android:layout_marginTop="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_place"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/textView_address"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_time"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="From - To"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/textView_activeHour"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_heart"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="120 likes"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/textView_likes"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_below="@id/shop_header"
+        >
+
+        <android.support.design.widget.TabLayout
+            android:background="@color/White"
+            android:layout_alignParentTop="true"
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:tabSelectedTextColor="@color/tabSelected">
+
+        </android.support.design.widget.TabLayout>
+
+        <android.support.v4.view.ViewPager
+            android:layout_below="@id/tab_layout"
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+</RelativeLayout>

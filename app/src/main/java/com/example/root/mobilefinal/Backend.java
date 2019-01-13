@@ -27,6 +27,8 @@ class Shop {
     String uid;
     String sid;
     String name;
+    String address;
+    Bitmap avatar;
     double lat;
     double lng;
     Time openHour;

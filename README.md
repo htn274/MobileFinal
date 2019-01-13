@@ -1,6 +1,6 @@
 # Tính Năng Chính 
 - [x] Login/Sign up
-- [ ] Tạo một shop của chính mình.
+- [x] Tạo một shop của chính mình.
 - [ ] Chỉnh sửa thông tin của một shop/ chỉnh sửa thông tin của một sản phẩm
 - Thông tin một shop:
   - [ ] Ảnh đại diện của shop

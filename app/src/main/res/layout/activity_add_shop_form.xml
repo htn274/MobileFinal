@@ -64,7 +64,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Closed hour"
+                android:hint="Close hour"
                 android:layout_weight="1"
                 android:id="@+id/EditText_closeHour" />
 

@@ -99,20 +99,10 @@ public class ProfileUser extends Fragment {
         if (bitmap_avatar == null) {
             bitmap_avatar = BitmapFactory.decodeResource(getResources(), R.drawable.profile);
             imageView.setImageBitmap(bitmap_avatar);
-            StorageReference ref = storage.getReference("avatar/" + getUserNameFromEmail(currentUser.getEmail()) + ".jpg");
-            ref.getBytes(1 << 20).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            Backend.downloadAvatar("avatar/user/" + currentUser.getUid() + ".jpg", new Backend.Callback<Bitmap>() {
                 @Override
-                public void onSuccess(byte[] bytes) {
-                    Log.i("btag", "byte length " + bytes.length);
-                    bitmap_avatar = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    Log.i("btag", "avatar download succeed " + currentUser.getEmail());
-                    imageView.setImageBitmap(bitmap_avatar);
-                    imageView.invalidate();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.i("btag", "avatar download failed " + currentUser.getEmail());
+                public void call(Bitmap data) {
+                    imageView.setImageBitmap(data);
                 }
             });
         }

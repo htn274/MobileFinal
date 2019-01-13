@@ -34,7 +34,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
     FirebaseStorage storage;
     TextView textView_uploadAvatar;
     ImageView imageView_avatar;
-    Bitmap choosenAvatar;
+    Bitmap chosenAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +71,8 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SET_AVATAR) {
-            choosenAvatar = ImagePicker.getImageFromResult(this, resultCode, data);
-            imageView_avatar.setImageBitmap(choosenAvatar);
+            chosenAvatar = ImagePicker.getImageFromResult(this, resultCode, data);
+            imageView_avatar.setImageBitmap(chosenAvatar);
         }
     }
 
@@ -98,26 +98,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(getApplicationContext(), "User registered successfully", Toast.LENGTH_LONG).show();
-                        if (choosenAvatar != null) {
-                            StorageReference ref = storage.getReference();
-                            final StorageReference avatar = ref.child("avatar/" + username + ".jpg");
-                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                            choosenAvatar.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
-                            byte[] data = baos.toByteArray();
-                            UploadTask uploadTask = avatar.putBytes(data);
-                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    Log.i("btag", "avatar uploaded succeed: " + avatar.getName());
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.i("btag", "avatar upload failed " + avatar.getName());
-                                }
-                            });
-                        }
+                        Backend.uploadAvatar("avatar/user/" + task.getResult().getUser().getUid() + ".jpg", chosenAvatar);
                         finish();
                     }
                 }

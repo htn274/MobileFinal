@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import android.widget.Button;
  */
 public class MyShopFragment extends Fragment implements View.OnClickListener {
 
-    Button btn_add;
+    FloatingActionButton btn_add;
     FragmentActivity myContext;
     public MyShopFragment() {
         // Required empty public constructor

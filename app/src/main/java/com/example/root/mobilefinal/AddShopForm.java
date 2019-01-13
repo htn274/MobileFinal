@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 
@@ -32,7 +33,8 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
     private GoogleApiClient mGoogleApiClient;
     private static final int PLACE_PICKER_REQUEST = 1;
     private static final int PICK_IMAGE_ID = 2;
-
+    Place pickedPlace;
+    Bitmap chosenAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
         btn_uploadAvatar.setOnClickListener((View.OnClickListener) this);
 
         btn_next = findViewById(R.id.btn_nextStep);
+        btn_next.setOnClickListener(this);
 
         editText_shopName = findViewById(R.id.editText_shopname);
 
@@ -85,6 +88,29 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
                 e.printStackTrace();
             }
         }
+        else if (view == btn_next) {
+            String uid = FirebaseAuth.getInstance().getUid();
+            String shopname = editText_shopName.getText().toString();
+            String address = editText_location.getText().toString();
+            String openHour = editText_openHour.getText().toString();
+            String closeHour = editText_closeHour.getText().toString();
+            double lat = pickedPlace.getLatLng().latitude;
+            double lng = pickedPlace.getLatLng().longitude;
+
+
+            Backend.addShop(this, uid, shopname, address, lat, lng, openHour, closeHour, new Backend.Callback<String>() {
+                @Override
+                public void call(String sid) {
+                    if (sid == null) {
+                        Log.d("btag", "addShop failed");
+                    }
+                    else {
+                        Log.d("btag", "add shop succeeded, shopid " + sid);
+                        Backend.uploadAvatar("avatar/shop/" + sid + ".jpg", chosenAvatar);
+                    }
+                }
+            });
+        }
     }
 
     void setTime(){
@@ -110,11 +136,11 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case PICK_IMAGE_ID:
-                Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+                chosenAvatar = ImagePicker.getImageFromResult(this, resultCode, data);
                 // TODO use bitmap
                 Glide.
                         with(this)
-                        .load(bitmapToByte(bitmap))
+                        .load(bitmapToByte(chosenAvatar))
                         .asBitmap()
                         .override(200,200)
                         .centerCrop()
@@ -122,12 +148,12 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
                 break;
             case PLACE_PICKER_REQUEST: {
                 if (resultCode == RESULT_OK) {
-                    Place place = PlacePicker.getPlace(data, this);
-                    StringBuilder stBuilder = new StringBuilder();
-                    String placename = String.format("%s", place.getName());
-                    String latitude = String.valueOf(place.getLatLng().latitude);
-                    String longitude = String.valueOf(place.getLatLng().longitude);
-                    String address = String.format("%s", place.getAddress());
+                    pickedPlace = PlacePicker.getPlace(data, this);
+//                    StringBuilder stBuilder = new StringBuilder();
+//                    String placename = String.format("%s", place.getName());
+//                    String latitude = String.valueOf(place.getLatLng().latitude);
+//                    String longitude = String.valueOf(place.getLatLng().longitude);
+                    String address = String.format("%s", pickedPlace.getAddress());
                     editText_location.setText(address);
                 }
             }

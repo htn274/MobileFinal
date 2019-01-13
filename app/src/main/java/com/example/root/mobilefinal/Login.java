@@ -71,10 +71,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w("btag", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Login faled", Toast.LENGTH_LONG).show();
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
-                            }
+                            Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
+
                         }
                     }
                 });
@@ -84,8 +82,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         setUpFireBase();
         editText_username = findViewById(R.id.editText_username);
         editText_password = findViewById(R.id.editText_password);
-//        assert editText_username != null;
-//        assert editText_password != null;
 
         btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(this);

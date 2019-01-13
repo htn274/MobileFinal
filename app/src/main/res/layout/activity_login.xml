@@ -27,7 +27,8 @@
         android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="60dp"/>
+        android:layout_marginTop="60dp"
+        android:text="ec"/>
     <EditText
         android:id="@+id/editText_password"
         android:layout_width="277dp"
@@ -40,6 +41,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
+        android:text="123456"
         />
 
     <LinearLayout

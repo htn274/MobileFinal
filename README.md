@@ -28,10 +28,10 @@
 - Danh mục sản phẩm 
 3. Profile: 
 - [x] Avatar
-- Hình ảnh
-- Danh sách sản phẩm yêu thích 
-- Danh sách shop của mình
-4. Màn hình tạo shop: gồm các thông tin cần thiết 
+- Hình ảnh (???)
+- [ ] Danh sách sản phẩm yêu thích 
+- [x] Danh sách shop của mình
+4. [x] Màn hình tạo shop: gồm các thông tin cần thiết 
 5. Màn hình chi tiết shop
 6. Màn hình chi tiết sản phẩm 
 7. Màn hình tất cả các sản phẩm (có filter)

@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Product name"
-                    android:id="@+id/editText_shopName"/>
+                    android:id="@+id/editText_itemName"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -147,19 +147,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginRight="15dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Weight"
-                            android:textSize="18dp"
-                            android:layout_weight="1"/>
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="Set weight"
-                            android:layout_marginLeft="15dp"
-                            android:inputType="number"
-                            android:id="@+id/weight"/>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -188,6 +176,7 @@
         </RelativeLayout>
 
     <Button
+        android:id="@+id/btn_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"

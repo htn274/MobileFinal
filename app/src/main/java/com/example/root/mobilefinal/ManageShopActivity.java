@@ -15,28 +15,36 @@ public class ManageShopActivity extends AppCompatActivity {
 
     private ViewPager pager;
     private TabLayout tabLayout;
+    ManageShopPageAdapter adapter;
     Shop thisShop;
     ImageView imageView_shopImage;
     TextView tv_shopName, tv_address, tv_activeHour;
+    String sid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            sid = savedInstanceState.getString("sid");
+            Log.e("btag", "bundle != null " + sid);
+        }
+        else {
+            final Intent intent = getIntent();
+            sid = intent.getStringExtra("sid");
+            Log.e("btag", "bundle == null " + sid);
+        }
         setContentView(R.layout.activity_manage_shop);
         addControl();
         setUI();
     }
 
-    private void addControl() {
-        pager = (ViewPager) this.findViewById(R.id.view_pager);
-        tabLayout = (TabLayout) this.findViewById(R.id.tab_layout);
-        FragmentManager manager = this.getSupportFragmentManager();
-        ManageShopPageAdapter adapter = new ManageShopPageAdapter(manager);
-        pager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(pager);
-        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setTabsFromPagerAdapter(adapter);//deprecated
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("sid", sid);
+    }
 
+    private void addControl() {
         imageView_shopImage = findViewById(R.id.imageView_shopImage);
         tv_shopName = findViewById(R.id.tv_shopName);
         tv_address = findViewById(R.id.textView_address);
@@ -44,16 +52,26 @@ public class ManageShopActivity extends AppCompatActivity {
     }
 
     void setUI() {
-        final Intent intent = getIntent();
-        Backend.getShop(intent.getStringExtra("sid"), new Backend.Callback<Shop>() {
+        Log.e("btag", "njnasfkjsagfkjsfgkjsdfgkjdfgkndgfnjegknjdgfsfnjfdg");
+        pager = (ViewPager) this.findViewById(R.id.view_pager);
+        tabLayout = (TabLayout) this.findViewById(R.id.tab_layout);
+        FragmentManager manager = this.getSupportFragmentManager();
+        adapter = new ManageShopPageAdapter(manager);
+        adapter.sid = sid;
+        pager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(pager);
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setTabsFromPagerAdapter(adapter);//deprecated
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
+
+        Backend.getShop(sid, new Backend.Callback<Shop>() {
             @Override
             public void call(Shop data) {
                 if (data == null) {
-                    Log.d("btag", "get shop error " + intent.getStringExtra("sid"));
+                    Log.d("btag", "get shop error " + sid);
                 }
                 else {
                     updateShop(data);
-
                 }
             }
         });

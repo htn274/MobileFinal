@@ -59,6 +59,11 @@ class Item {
 }
 
 public class Backend {
+    static HashMap<String, Object> cache;
+    static {
+        cache = new HashMap<>();
+    }
+
     public interface Callback<T> {
         public void call(T data);
     }
@@ -101,13 +106,19 @@ public class Backend {
     }
 
     public static void downloadAvatar(final String filename, final Callback<Bitmap> cb) {
+        if (cache.containsKey(filename)) {
+            cb.call((Bitmap)cache.get(filename));
+            return;
+        }
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference ref = storage.getReference(filename);
         ref.getBytes(1 << 20).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Log.d("btag", "avatar download succeed " + filename + ", byte length " + bytes.length);
-                cb.call(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                cache.put(filename, bitmap);
+                cb.call(bitmap);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -141,7 +152,7 @@ public class Backend {
         }
     }
 
-    public static void addShop(Context context, String uid, String shopName, String address, double lat, double lng, String openHour, String closeHour, final Callback<String> cb) {
+    public static void addShop(Context context, String uid, final String shopName, String address, double lat, double lng, String openHour, String closeHour, final Callback<String> cb) {
         FirebaseFunctions functions = FirebaseFunctions.getInstance();
         HashMap<String, Object> params = new HashMap<>();
         params.put("uid", uid);
@@ -182,6 +193,8 @@ public class Backend {
                             if (e instanceof FirebaseFunctionsException) {
                                 FirebaseFunctionsException fe = (FirebaseFunctionsException) e;
                             }
+                            Log.d("btag", "addShop failed " + shopName);
+                            cb.call(null);
                         }
                     }
                 });
@@ -196,7 +209,7 @@ public class Backend {
             public void call(List<Shop> data) {
                 ArrayList<Shop> myShops = new ArrayList<>();
                 for (Shop shop : data) {
-                    if (shop.sid.equals(currentUser.getUid())) {
+                    if (shop.uid.equals(currentUser.getUid())) {
                         myShops.add(shop);
                     }
                 }
@@ -262,6 +275,54 @@ public class Backend {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("btag", "DatabaseError getMyShops");
+            }
+        });
+    }
+
+    public static void addItem(final String sid, final String name, String description, String category, String price, String quantity, String color, String size, final Callback<String> cb) {
+        FirebaseFunctions functions = FirebaseFunctions.getInstance();
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("name", name);
+        params.put("description", description);
+        params.put("category", category);
+        params.put("price", price);
+        params.put("quantity", quantity);
+        params.put("color", color);
+        params.put("size", size);
+
+        functions
+                .getHttpsCallable("addItem")
+                .call(params).continueWith(new Continuation<HttpsCallableResult, String>() {
+            @Override
+            public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                return ((Map<String, String>)task.getResult().getData()).get("iid");
+            }
+        }).addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (task.isSuccessful()) {
+                    cb.call(task.getResult());
+                }
+                else {
+                    Log.d("btag", "add item failed " + name + " " + sid);
+                    cb.call(null);
+                }
+            }
+        });
+    }
+
+    public static void getShopItems(final String sid, final Callback<List<Item>> cb) {
+        getAllItems(new Callback<List<Item>>() {
+            @Override
+            public void call(List<Item> data) {
+                ArrayList<Item> shopItems = new ArrayList<>();
+                for (Item item : data) {
+                    if (item.sid.equals(sid)) {
+                        shopItems.add(item);
+                    }
+                }
+                cb.call(shopItems);
             }
         });
     }

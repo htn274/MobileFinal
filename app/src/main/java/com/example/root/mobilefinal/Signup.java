@@ -97,7 +97,9 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                 public void call(String data) {
                     if (data != null) {
                         Toast.makeText(getApplicationContext(), "User registered successfully", Toast.LENGTH_LONG).show();
-                        Backend.uploadAvatar("avatar/user/" + data + ".jpg", chosenAvatar);
+                        if (chosenAvatar != null) {
+                            Backend.uploadAvatar("avatar/user/" + data + ".jpg", chosenAvatar);
+                        }
                         finish();
                     }
                 }

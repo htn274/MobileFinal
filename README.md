@@ -3,9 +3,9 @@
 - [x] Tạo một shop của chính mình.
 - [ ] Chỉnh sửa thông tin của một shop/ chỉnh sửa thông tin của một sản phẩm
 - Thông tin một shop:
-  - [ ] Ảnh đại diện của shop
-  - [ ] Tên shop 
-  - [ ] Giờ đóng cửa/mở cửa
+  - [x] Ảnh đại diện của shop
+  - [x] Tên shop 
+  - [x] Giờ đóng cửa/mở cửa
   - [ ] Số điện thoại
   - [ ] Địa điểm (location)
   - [ ] Danh sách các sản phẩm: tên, hình ảnh, giá

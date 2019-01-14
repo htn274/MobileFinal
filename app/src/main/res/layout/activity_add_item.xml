@@ -179,7 +179,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="Set variations"
-                            android:layout_marginLeft="15dp"/>
+                            android:layout_marginLeft="15dp"
+                            android:id="@+id/editText_setVariations"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

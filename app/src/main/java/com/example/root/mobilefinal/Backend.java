@@ -42,7 +42,19 @@ class Shop {
     Map<String, Double> loc;
     String open_hour;
     String close_hour;
+    Long likes;
     Bitmap avatar;
+}
+
+class Item {
+    String name;
+    String iid;
+    String sid;
+    String description;
+    Long price;
+    Long quantity;
+    Map<String, String> variation;
+    Long buys;
 }
 
 public class Backend {
@@ -206,5 +218,13 @@ public class Backend {
                 Log.d("btag", "DatabaseError getMyShops");
             }
         });
+    }
+
+    public static void getAllItems(Callback<List<Item>> cb) {
+
+    }
+
+    public static void getAllShops(Callback<List<Shop>> cb) {
+
     }
 }

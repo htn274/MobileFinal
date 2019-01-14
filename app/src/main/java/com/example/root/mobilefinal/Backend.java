@@ -51,6 +51,7 @@ class Item {
     String iid;
     String sid;
     String description;
+    String category;
     Long price;
     Long quantity;
     Map<String, String> variation;
@@ -187,31 +188,47 @@ public class Backend {
     }
 
     public static void getMyShops(final Callback<List<Shop>> cb) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("btag", "getUid " + currentUser.getUid());
+
+        getAllShops(new Callback<List<Shop>>() {
+            @Override
+            public void call(List<Shop> data) {
+                ArrayList<Shop> myShops = new ArrayList<>();
+                for (Shop shop : data) {
+                    if (shop.sid.equals(currentUser.getUid())) {
+                        myShops.add(shop);
+                    }
+                }
+                cb.call(myShops);
+            }
+        });
+    }
+
+    public static void getAllItems(final Callback<List<Item>> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         DatabaseReference databaseReference = database.getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Shop> myShops = new ArrayList<>();
-                for (DataSnapshot ref : dataSnapshot.child("shops").getChildren()) {
-                    final Shop shop = ref.getValue(Shop.class);
-//                    Log.d("btag", "name" + shop.name);
-//                    Log.d("btag", "address" + shop.address);
-//                    Log.d("btag", "sid " + shop.sid);
-//                    Log.d("btag", "uid " + shop.uid);
-//                    Log.d("btag", "open hour " + shop.open_hour);
-//                    Log.d("btag", "close hour " + shop.close_hour);
-//                    Log.d("btag", "lat " + shop.loc.get("lat").toString());
-//                    Log.d("btag", "lng " + shop.loc.get("lng").toString());
-//                    Log.d("btag", "getUid " + currentUser.getUid());
-                    if (shop.uid.equals(currentUser.getUid())) {
-                        Log.d("btag", "ecec " + shop.sid);
-                        myShops.add(shop);
-                    }
+                List<Item> items = new ArrayList<>();
+                for (DataSnapshot ref : dataSnapshot.child("items").getChildren()) {
+                    Item item = ref.getValue(Item.class);
+                    Log.d("btag", "name " + item.name);
+                    Log.d("btag", "iid " + item.iid);
+                    Log.d("btag", "sid " + item.sid);
+                    Log.d("btag", "description " + item.description);
+                    Log.d("btag", "category " + item.category);
+                    Log.d("btag", "price " + item.price);
+                    Log.d("btag", "quantity " + item.quantity);
+                    Log.d("btag", "buys " + item.buys);
+                    Log.d("btag", "color" + item.variation.get("color"));
+                    Log.d("btag", "size" + item.variation.get("size"));
+
+                    items.add(item);
                 }
-                cb.call(myShops);
+                cb.call(items);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -220,11 +237,32 @@ public class Backend {
         });
     }
 
-    public static void getAllItems(Callback<List<Item>> cb) {
+    public static void getAllShops(final Callback<List<Shop>> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    }
-
-    public static void getAllShops(Callback<List<Shop>> cb) {
-
+        DatabaseReference databaseReference = database.getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Shop> shops = new ArrayList<>();
+                for (DataSnapshot ref : dataSnapshot.child("shops").getChildren()) {
+                    final Shop shop = ref.getValue(Shop.class);
+                    Log.d("btag", "name" + shop.name);
+                    Log.d("btag", "address" + shop.address);
+                    Log.d("btag", "sid " + shop.sid);
+                    Log.d("btag", "uid " + shop.uid);
+                    Log.d("btag", "open hour " + shop.open_hour);
+                    Log.d("btag", "close hour " + shop.close_hour);
+                    Log.d("btag", "lat " + shop.loc.get("lat").toString());
+                    Log.d("btag", "lng " + shop.loc.get("lng").toString());
+                    shops.add(shop);
+                }
+                cb.call(shops);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("btag", "DatabaseError getMyShops");
+            }
+        });
     }
 }

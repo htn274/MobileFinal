@@ -55,6 +55,7 @@
 - category:
 - price:
 - quantity:
+- buys
 - variation:
     + color 
     + size

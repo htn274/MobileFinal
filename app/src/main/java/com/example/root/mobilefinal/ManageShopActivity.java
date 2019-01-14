@@ -1,5 +1,6 @@
 package com.example.root.mobilefinal;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ public class ManageShopActivity extends AppCompatActivity {
 
     private ViewPager pager;
     private TabLayout tabLayout;
+    Shop thisShop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +20,13 @@ public class ManageShopActivity extends AppCompatActivity {
     }
 
     private void addControl() {
+        Intent intent = getIntent();
+        Backend.getShop(intent.getStringExtra("sid"), new Backend.Callback<Shop>() {
+            @Override
+            public void call(Shop data) {
+
+            }
+        });
         pager = (ViewPager) this.findViewById(R.id.view_pager);
         tabLayout = (TabLayout) this.findViewById(R.id.tab_layout);
         FragmentManager manager = this.getSupportFragmentManager();

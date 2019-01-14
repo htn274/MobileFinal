@@ -14,10 +14,10 @@ public class ManageShopPageAdapter extends FragmentStatePagerAdapter {
         Fragment frag = null;
         switch (position) {
             case 0:
-                frag = new MangeShopItemFragment();
+                frag = new ManageShopItemFragment();
                 break;
             case 1:
-                frag = new MangeOdersShopFragment();
+                frag = new ManageOdersShopFragment();
                 break;
             case 2:
                 frag = new StatisticShopFragment();

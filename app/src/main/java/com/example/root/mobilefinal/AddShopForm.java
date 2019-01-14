@@ -103,10 +103,13 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
                 public void call(String sid) {
                     if (sid == null) {
                         Log.d("btag", "addShop failed");
+
                     }
                     else {
                         Log.d("btag", "add shop succeeded, shopid " + sid);
+                        Toast.makeText(getApplicationContext(), "Shop added successfully", Toast.LENGTH_SHORT).show();
                         Backend.uploadAvatar("avatar/shop/" + sid + ".jpg", chosenAvatar);
+                        finish();
                     }
                 }
             });

@@ -83,26 +83,26 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
             String password = editText_password.getText().toString();
             String passwordConfirm = editText_passwordConfirm.getText().toString();
 
-            if (username == "" || password == "" || passwordConfirm == "") {
+            if (username.equals("") || password.equals("") || passwordConfirm.equals("")) {
                 Toast.makeText(this, "Username and password may not be empty", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if (password.equals(passwordConfirm) == false) {
+            if (!password.equals(passwordConfirm)) {
                 Toast.makeText(this, "Password not matched", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            auth.createUserWithEmailAndPassword(username + "@gmail.com", password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            Backend.signUp(username, password, chosenAvatar, new Backend.Callback<String>() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
+                public void call(String data) {
+                    if (data != null) {
                         Toast.makeText(getApplicationContext(), "User registered successfully", Toast.LENGTH_LONG).show();
-                        Backend.uploadAvatar("avatar/user/" + task.getResult().getUser().getUid() + ".jpg", chosenAvatar);
+                        Backend.uploadAvatar("avatar/user/" + data + ".jpg", chosenAvatar);
                         finish();
                     }
                 }
             });
+
         }
         else if (view == textView_uploadAvatar) {
             setAvatar();

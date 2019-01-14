@@ -97,7 +97,7 @@ public class ProfileUser extends Fragment {
 
     private void downloadAvatar() {
         if (bitmap_avatar == null) {
-            bitmap_avatar = BitmapFactory.decodeResource(getResources(), R.drawable.profile);
+            bitmap_avatar = BitmapFactory.decodeResource(getResources(), R.drawable.profile_empty);
             imageView.setImageBitmap(bitmap_avatar);
             Backend.downloadAvatar("avatar/user/" + currentUser.getUid() + ".jpg", new Backend.Callback<Bitmap>() {
                 @Override

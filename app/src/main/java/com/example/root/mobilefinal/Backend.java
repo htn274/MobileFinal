@@ -5,12 +5,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.firebase.functions.HttpsCallableResult;
@@ -20,7 +29,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 class Shop {
@@ -28,16 +39,46 @@ class Shop {
     String sid;
     String name;
     String address;
+    Map<String, Double> loc;
+    String open_hour;
+    String close_hour;
     Bitmap avatar;
-    double lat;
-    double lng;
-    Time openHour;
-    Time closeHour;
 }
 
 public class Backend {
     public interface Callback<T> {
         public void call(T data);
+    }
+
+    public static void getShop(String sid, Callback<Shop> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference();
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public static void signUp(String username, String password, final Bitmap chosenAvatar, final Callback<String> cb) {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(username + "@gmail.com", password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    cb.call(task.getResult().getUser().getUid());
+                }
+                else {
+                    cb.call(null);
+                }
+            }
+        });
     }
 
     public static void downloadAvatar(final String filename, final Callback<Bitmap> cb) {
@@ -125,5 +166,39 @@ public class Backend {
                         }
                     }
                 });
+    }
+
+    public static void getMyShops(final Callback<List<Shop>> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference databaseReference = database.getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Shop> myShops = new ArrayList<>();
+                for (DataSnapshot ref : dataSnapshot.child("shops").getChildren()) {
+                    final Shop shop = ref.getValue(Shop.class);
+//                    Log.d("btag", "name" + shop.name);
+//                    Log.d("btag", "address" + shop.address);
+//                    Log.d("btag", "sid " + shop.sid);
+//                    Log.d("btag", "uid " + shop.uid);
+//                    Log.d("btag", "open hour " + shop.open_hour);
+//                    Log.d("btag", "close hour " + shop.close_hour);
+//                    Log.d("btag", "lat " + shop.loc.get("lat").toString());
+//                    Log.d("btag", "lng " + shop.loc.get("lng").toString());
+//                    Log.d("btag", "getUid " + currentUser.getUid());
+                    if (shop.uid.equals(currentUser.getUid())) {
+                        Log.d("btag", "ecec " + shop.sid);
+                        myShops.add(shop);
+                    }
+                }
+                cb.call(myShops);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("btag", "DatabaseError getMyShops");
+            }
+        });
     }
 }

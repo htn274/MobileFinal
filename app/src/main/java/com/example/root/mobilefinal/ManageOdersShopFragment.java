@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MangeOdersShopFragment extends Fragment {
+public class ManageOdersShopFragment extends Fragment {
 
 
-    public MangeOdersShopFragment() {
+    public ManageOdersShopFragment() {
         // Required empty public constructor
     }
 
@@ -23,7 +23,7 @@ public class MangeOdersShopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mange_oders_shop, container, false);
+        return inflater.inflate(R.layout.fragment_manage_oders_shop, container, false);
     }
 
 }

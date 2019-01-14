@@ -36,3 +36,29 @@ exports.addShop = functions.https.onCall((data, context) => {
         return {sid: sid};
     });
 });
+
+exports.addItem = functions.https.onCall((data, context) => {
+    const sid = data.sid;
+    const name = data.name;
+    const description = data.description;
+    const category = data.category;
+    const price = data.price;
+    const quantity = data.quantity;
+    const color = data.color;
+    const size = data.color;
+    const iid = (new Date()).getTime().toString();
+    
+    console.log('iid ' + iid);
+    console.log('sid ' + sid);
+    console.log('name ' + name);
+    console.log('category ' + category);
+    console.log('description ' + description);
+    console.log('price ' + price);
+    console.log('quantity ' + quantity);
+    console.log('color ' + color);
+    console.log('size ' + size);
+
+    return admin.database().ref('/items').push({iid: iid, sid: sid, name: name, description: description, category: category, price: price, quantity: quantity, variation: {color: color, size: size}}).then(() => {
+        return {iid: iid};
+    });
+});

@@ -7,12 +7,15 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class VariationDialog extends DialogFragment implements View.OnClickListener {
 
     private Callback callback;
+    EditText editText_color;
+    EditText editText_size;
 
     static VariationDialog newInstance() {
         return new VariationDialog();
@@ -35,6 +38,9 @@ public class VariationDialog extends DialogFragment implements View.OnClickListe
         ImageButton close = view.findViewById(R.id.fullscreen_dialog_close);
         ImageButton action = view.findViewById(R.id.fullscreen_dialog_action);
 
+        editText_color = view.findViewById(R.id.editText_colorAttribute);
+        editText_size = view.findViewById(R.id.editText_sizeAttribute);
+
         close.setOnClickListener(this);
         action.setOnClickListener(this);
 
@@ -52,7 +58,7 @@ public class VariationDialog extends DialogFragment implements View.OnClickListe
                 break;
 
             case R.id.fullscreen_dialog_action:
-                callback.onActionClick("Whatever");
+                callback.onActionClick(editText_color.getText().toString(), editText_size.getText().toString());
                 dismiss();
                 break;
 
@@ -62,7 +68,7 @@ public class VariationDialog extends DialogFragment implements View.OnClickListe
 
     public interface Callback {
 
-        void onActionClick(String name);
+        void onActionClick(String color, String size);
 
     }
 

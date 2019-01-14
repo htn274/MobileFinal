@@ -1,10 +1,13 @@
 package com.example.root.mobilefinal;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 public class ManageShopPageAdapter extends FragmentStatePagerAdapter {
+    String sid;
     public ManageShopPageAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -12,6 +15,9 @@ public class ManageShopPageAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment frag = null;
+        Bundle arg = new Bundle();
+        arg.putString("sid", sid);
+        Log.e("btag", "Fragment getItem sid = " + sid);
         switch (position) {
             case 0:
                 frag = new ManageShopItemFragment();
@@ -23,6 +29,7 @@ public class ManageShopPageAdapter extends FragmentStatePagerAdapter {
                 frag = new StatisticShopFragment();
                 break;
         }
+        frag.setArguments(arg);
         return frag;
     }
 

@@ -51,6 +51,7 @@ class Item {
     String iid;
     String sid;
     String description;
+    String category;
     Long price;
     Long quantity;
     Map<String, String> variation;
@@ -58,6 +59,11 @@ class Item {
 }
 
 public class Backend {
+    static HashMap<String, Object> cache;
+    static {
+        cache = new HashMap<>();
+    }
+
     public interface Callback<T> {
         public void call(T data);
     }
@@ -100,13 +106,19 @@ public class Backend {
     }
 
     public static void downloadAvatar(final String filename, final Callback<Bitmap> cb) {
+        if (cache.containsKey(filename)) {
+            cb.call((Bitmap)cache.get(filename));
+            return;
+        }
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference ref = storage.getReference(filename);
         ref.getBytes(1 << 20).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Log.d("btag", "avatar download succeed " + filename + ", byte length " + bytes.length);
-                cb.call(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                cache.put(filename, bitmap);
+                cb.call(bitmap);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -140,7 +152,7 @@ public class Backend {
         }
     }
 
-    public static void addShop(Context context, String uid, String shopName, String address, double lat, double lng, String openHour, String closeHour, final Callback<String> cb) {
+    public static void addShop(Context context, String uid, final String shopName, String address, double lat, double lng, String openHour, String closeHour, final Callback<String> cb) {
         FirebaseFunctions functions = FirebaseFunctions.getInstance();
         HashMap<String, Object> params = new HashMap<>();
         params.put("uid", uid);
@@ -181,37 +193,55 @@ public class Backend {
                             if (e instanceof FirebaseFunctionsException) {
                                 FirebaseFunctionsException fe = (FirebaseFunctionsException) e;
                             }
+                            Log.d("btag", "addShop failed " + shopName);
+                            cb.call(null);
                         }
                     }
                 });
     }
 
     public static void getMyShops(final Callback<List<Shop>> cb) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("btag", "getUid " + currentUser.getUid());
+
+        getAllShops(new Callback<List<Shop>>() {
+            @Override
+            public void call(List<Shop> data) {
+                ArrayList<Shop> myShops = new ArrayList<>();
+                for (Shop shop : data) {
+                    if (shop.uid.equals(currentUser.getUid())) {
+                        myShops.add(shop);
+                    }
+                }
+                cb.call(myShops);
+            }
+        });
+    }
+
+    public static void getAllItems(final Callback<List<Item>> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         DatabaseReference databaseReference = database.getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Shop> myShops = new ArrayList<>();
-                for (DataSnapshot ref : dataSnapshot.child("shops").getChildren()) {
-                    final Shop shop = ref.getValue(Shop.class);
-//                    Log.d("btag", "name" + shop.name);
-//                    Log.d("btag", "address" + shop.address);
-//                    Log.d("btag", "sid " + shop.sid);
-//                    Log.d("btag", "uid " + shop.uid);
-//                    Log.d("btag", "open hour " + shop.open_hour);
-//                    Log.d("btag", "close hour " + shop.close_hour);
-//                    Log.d("btag", "lat " + shop.loc.get("lat").toString());
-//                    Log.d("btag", "lng " + shop.loc.get("lng").toString());
-//                    Log.d("btag", "getUid " + currentUser.getUid());
-                    if (shop.uid.equals(currentUser.getUid())) {
-                        Log.d("btag", "ecec " + shop.sid);
-                        myShops.add(shop);
-                    }
+                List<Item> items = new ArrayList<>();
+                for (DataSnapshot ref : dataSnapshot.child("items").getChildren()) {
+                    Item item = ref.getValue(Item.class);
+                    Log.d("btag", "name " + item.name);
+                    Log.d("btag", "iid " + item.iid);
+                    Log.d("btag", "sid " + item.sid);
+                    Log.d("btag", "description " + item.description);
+                    Log.d("btag", "category " + item.category);
+                    Log.d("btag", "price " + item.price);
+                    Log.d("btag", "quantity " + item.quantity);
+                    Log.d("btag", "buys " + item.buys);
+                    Log.d("btag", "color" + item.variation.get("color"));
+                    Log.d("btag", "size" + item.variation.get("size"));
+
+                    items.add(item);
                 }
-                cb.call(myShops);
+                cb.call(items);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -220,11 +250,80 @@ public class Backend {
         });
     }
 
-    public static void getAllItems(Callback<List<Item>> cb) {
+    public static void getAllShops(final Callback<List<Shop>> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+        DatabaseReference databaseReference = database.getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Shop> shops = new ArrayList<>();
+                for (DataSnapshot ref : dataSnapshot.child("shops").getChildren()) {
+                    final Shop shop = ref.getValue(Shop.class);
+                    Log.d("btag", "name" + shop.name);
+                    Log.d("btag", "address" + shop.address);
+                    Log.d("btag", "sid " + shop.sid);
+                    Log.d("btag", "uid " + shop.uid);
+                    Log.d("btag", "open hour " + shop.open_hour);
+                    Log.d("btag", "close hour " + shop.close_hour);
+                    Log.d("btag", "lat " + shop.loc.get("lat").toString());
+                    Log.d("btag", "lng " + shop.loc.get("lng").toString());
+                    shops.add(shop);
+                }
+                cb.call(shops);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("btag", "DatabaseError getMyShops");
+            }
+        });
     }
 
-    public static void getAllShops(Callback<List<Shop>> cb) {
+    public static void addItem(final String sid, final String name, String description, String category, String price, String quantity, String color, String size, final Callback<String> cb) {
+        FirebaseFunctions functions = FirebaseFunctions.getInstance();
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("name", name);
+        params.put("description", description);
+        params.put("category", category);
+        params.put("price", price);
+        params.put("quantity", quantity);
+        params.put("color", color);
+        params.put("size", size);
 
+        functions
+                .getHttpsCallable("addItem")
+                .call(params).continueWith(new Continuation<HttpsCallableResult, String>() {
+            @Override
+            public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                return ((Map<String, String>)task.getResult().getData()).get("iid");
+            }
+        }).addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (task.isSuccessful()) {
+                    cb.call(task.getResult());
+                }
+                else {
+                    Log.d("btag", "add item failed " + name + " " + sid);
+                    cb.call(null);
+                }
+            }
+        });
+    }
+
+    public static void getShopItems(final String sid, final Callback<List<Item>> cb) {
+        getAllItems(new Callback<List<Item>>() {
+            @Override
+            public void call(List<Item> data) {
+                ArrayList<Item> shopItems = new ArrayList<>();
+                for (Item item : data) {
+                    if (item.sid.equals(sid)) {
+                        shopItems.add(item);
+                    }
+                }
+                cb.call(shopItems);
+            }
+        });
     }
 }

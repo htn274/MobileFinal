@@ -31,6 +31,7 @@
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/profile_default"/>
                 <TextView
+                    android:id="@+id/btn_uploadPhoto"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:text="Upload photo"
@@ -51,17 +52,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Product name"
-                    android:id="@+id/editText_shopname"/>
+                    android:id="@+id/editText_shopName"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint = "Product Description"
-                    android:id="@+id/editText_location"/>
+                    android:id="@+id/editText_description"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Addition Detail"
+                    android:text="Additional Detail"
                     android:textSize="20dp"/>
 
                 <LinearLayout

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -16,6 +17,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
     Spinner spnCategory;
     ImageView imageView_item;
+    EditText editText_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

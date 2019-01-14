@@ -50,14 +50,20 @@ public class Backend {
         public void call(T data);
     }
 
-    public static void getShop(String sid, Callback<Shop> cb) {
+    public static void getShop(final String sid, final Callback<Shop> cb) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                for (DataSnapshot ds : dataSnapshot.child("shops").getChildren()) {
+                    Shop shop = ds.getValue(Shop.class);
+                    if (shop.sid .equals(sid)) {
+                        cb.call(shop);
+                    }
+                }
+                cb.call(null);
             }
 
             @Override

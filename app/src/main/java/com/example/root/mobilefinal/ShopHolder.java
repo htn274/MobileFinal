@@ -9,13 +9,14 @@ import android.widget.TextView;
 public class ShopHolder extends RecyclerView.ViewHolder {
     ImageView imageView_avatar;
     TextView textView_name, textView_address, textView_workTime;
-
+    ImageView button_menu;
     public ShopHolder(View view) {
         super(view);
         imageView_avatar = view.findViewById(R.id.imageView_avatar);
         textView_name = view.findViewById(R.id.textView_name);
         textView_address = view.findViewById(R.id.textView_address);
         textView_workTime = view.findViewById(R.id.textView_workTime);
+        button_menu = view.findViewById(R.id.btn_menu);
     }
 
     public void bind(Shop shop) {

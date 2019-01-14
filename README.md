@@ -49,11 +49,11 @@
 - close_hour
 3. Item:
 - iid
-- shop: sid
+- sid
 - name:
+- description
 - category:
 - price:
-- image:
 - quantity:
 - variation:
     + color 

@@ -51,12 +51,10 @@
 - iid
 - shop: sid
 - name:
-- description:
 - category:
 - price:
 - image:
 - quantity:
-- weight:
 - variation:
     + color 
     + size

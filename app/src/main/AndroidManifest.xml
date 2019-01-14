@@ -17,21 +17,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AddItem">
+        <activity android:name=".Login"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Signup" />
-        <activity android:name=".ShopDetail" />
-        <activity android:name=".AddShopForm" />
-        <activity android:name=".Login">
-
-            <!-- <meta-data tools:replace="android:value"></meta-data> -->
-        </activity>
+        <activity android:name=".AddItem"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Signup"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".ShopDetail"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".AddShopForm"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

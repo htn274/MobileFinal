@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#ffffff">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/light_gray_rect"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_add_shopping_cart_black"/>
+
+            <ImageView
+                android:id="@+id/imageshose"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/shoes3"/>
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200.000 VND"
+                android:textSize="14sp"
+                android:textColor="#ef4e33" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product name"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"/>
+    </LinearLayout>
+
+</LinearLayout>

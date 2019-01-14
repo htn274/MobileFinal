@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <include layout="@layout/toolbar_home" />
+            <include layout="@layout/toolbar_home"
+                android:id="@+id/toolbar_home"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -19,45 +19,32 @@
             android:paddingBottom="20dp">
 
             <ImageView
-                android:id="@+id/imageView_addCart"
+                android:id="@+id/btn_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="end"
                 android:layout_marginRight="15dp"
-                android:src="@drawable/ic_add_shopping_cart_black"/>
+                android:src="@drawable/ic_heart_border"/>
 
-            <ImageView
-                android:id="@+id/imageView_item"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView_avatarShop"
                 android:layout_width="130dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="65dp"
                 android:layout_marginLeft="18dp"
-                android:src="@drawable/shoes3"/>
+                android:src="@drawable/profile1"/>
         </FrameLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:id="@+id/textView_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="200.000 VND"
-                android:textSize="14sp"
-                android:textColor="#ef4e33" />
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product name"
+            android:text="Shop Name"
             android:textSize="15sp"
             android:layout_marginTop="5dp"
             android:textColor="#000000"
-            android:id="@+id/textView_itemName"/>
+            android:id="@+id/textView_shopName"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -59,3 +59,9 @@
 - variation:
     + color 
     + size
+
+4. Cart
+- uid
+- items: list<{iid, quantity}>
+
+

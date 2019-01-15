@@ -8,13 +8,14 @@
 
     <android.support.design.widget.FloatingActionButton
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/White"
         android:id="@+id/btn_addShop"
+        android:layout_marginBottom="50dp"
         />
 
     <android.support.v7.widget.RecyclerView

@@ -511,4 +511,25 @@ public class Backend {
             }
         });
     }
+
+    public static void addCart(String iid, String quantity, final Callback<Boolean> cb) {
+        Map<String, String> params = new HashMap<>();
+        params.put("iid", iid);
+        params.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        params.put("quantity", quantity);
+        FirebaseFunctions.getInstance()
+                .getHttpsCallable("addCart")
+                .call(params)
+                .continueWith(new Continuation<HttpsCallableResult, Boolean>() {
+                    @Override
+                    public Boolean then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        return ((Map<String, Boolean>)task.getResult().getData()).get("ok");
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+            @Override
+            public void onComplete(@NonNull Task<Boolean> task) {
+                cb.call(true);
+            }
+        });
+    }
 }

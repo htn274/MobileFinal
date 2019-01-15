@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="110dp"
+        android:paddingRight="10dp"
+        android:id="@+id/imageView_itemImage" />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Product name"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:id="@+id/textView_itemName"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Provider "
+                    android:layout_weight="3"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ABC company"
+
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_price"
+                android:textColor="@color/priceColor"
+                android:text="99.000 đ"
+                android:textSize="15dp"/>
+
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:backGroundColor="@color/White"
+                app:textColor="@color/Black">
+            </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_clear_black"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    
+
+</LinearLayout>

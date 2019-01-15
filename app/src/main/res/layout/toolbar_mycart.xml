@@ -6,21 +6,11 @@
     android:orientation="horizontal"
     android:background="@color/colorPrimary"
     app:navigationIcon="@drawable/ic_arrow_back_white">
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="right">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_search_white"
-            android:layout_marginRight="12dp"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_shopping_cart_white"
-            android:layout_marginRight="12dp"/>
-    </LinearLayout>
+        android:text="MY CART"
+        android:textColor="@color/White"
+        android:textSize="20dp" />
 
 </android.support.v7.widget.Toolbar>

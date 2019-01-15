@@ -1,5 +1,6 @@
 package com.example.root.mobilefinal;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +21,7 @@ public class ItemHolder extends RecyclerView.ViewHolder {
         textView_variation = view.findViewById(R.id.textView_variation);
 
         button_menu = view.findViewById(R.id.btn_menu);
+
     }
 
     public void bind(Item item) {

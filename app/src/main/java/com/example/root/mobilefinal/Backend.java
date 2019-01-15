@@ -68,6 +68,20 @@ class Item {
     String quantity;
     Map<String, String> variation;
     String buys;
+
+    public Map<String,Object> toMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("iid", iid);
+        map.put("sid", sid);
+        map.put("description", description);
+        map.put("category", category);
+        map.put("price", price);
+        map.put("quantity", quantity);
+        map.put("variation", variation);
+        map.put("buys", buys);
+        return map;
+    }
 }
 
 public class Backend {
@@ -152,7 +166,7 @@ public class Backend {
             StorageReference ref = storage.getReference();
             final StorageReference avatarRef = ref.child(filename);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            chosenAvatar.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            chosenAvatar.compress(Bitmap.CompressFormat.JPEG, 60, baos);
 
             byte[] data = baos.toByteArray();
             UploadTask uploadTask = avatarRef.putBytes(data);
@@ -334,6 +348,38 @@ public class Backend {
         });
     }
 
+    public static void updateItem(final String iid, final String name, final String description, final String category, final String price, final String quantity, final String color, final String size, final Callback<Boolean> cb) {
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.child("items").getChildren()) {
+                    Item item = ds.getValue(Item.class);
+                    if (item.iid.equals(iid)) {
+                        item.name = name;
+                        item.description = description;
+                        item.category = category;
+                        item.price = price;
+                        item.quantity = quantity;
+                        item.variation.put("color", color);
+                        item.variation.put("size", size);
+                        ds.getRef().updateChildren(item.toMap());
+                        cb.call(true);
+                        ref.removeEventListener(this);
+                        return;
+                    }
+                }
+                cb.call(false);
+                ref.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                ref.removeEventListener(this);
+            }
+        });
+    }
+
     public static void getShopItems(final String sid, final Callback<List<Item>> cb) {
         Log.d("btag", "getShopItems " + sid);
         getAllItems(new Callback<List<Item>>() {
@@ -403,7 +449,66 @@ public class Backend {
         });
     }
 
-    public static void deleteItem(String iid, Callback<Boolean> cb) {
-        // TODO
+    public static void getItem(final String iid, final Callback<Item> cb) {
+        Log.d("btag", "getItem iid " + iid);
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.child("items").getChildren()) {
+                    Item item = ds.getValue(Item.class);
+                    Log.d("btag", "item name " + item.name);
+                    Log.d("btag", "item iid " + item.iid);
+                    Log.d("btag", "item sid " + item.sid);
+                    Log.d("btag", "item description " + item.description);
+                    Log.d("btag", "item category " + item.category);
+                    Log.d("btag", "item price " + item.price);
+                    Log.d("btag", "item quantity " + item.quantity);
+//                    Log.d("btag", "buys " + item.buys);
+                    Log.d("btag", "color" + item.variation.get("color"));
+                    Log.d("btag", "size" + item.variation.get("size"));
+
+                    if (item.iid.equals(iid)) {
+                        Log.d("btag", "found item iid " + iid);
+                        cb.call(item);
+                        ref.removeEventListener(this);
+                        return;
+                    }
+                }
+                cb.call(null);
+                ref.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                ref.removeEventListener(this);
+            }
+        });
+    }
+    public static void deleteItem(final String iid, final Callback<Boolean> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = database.getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.child("items").getChildren()) {
+                    Item item = ds.getValue(Item.class);
+                    if (item.iid.equals(iid)) {
+                        ds.getRef().removeValue();
+                        Log.d("btag", "removed item ref " + item.iid);
+                        ref.removeEventListener(this);
+                        cb.call(true);
+                        return;
+                    }
+                }
+                cb.call(false);
+                ref.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                ref.removeEventListener(this);
+            }
+        });
     }
 }

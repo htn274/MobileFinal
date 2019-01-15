@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ItemDetail"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
     <include layout="@layout/toolbar_item_detail"
         android:id="@+id/toolbar_itemDetail"/>
 
@@ -21,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:src="@drawable/profile"
-                android:id="@+id/imageView_item"/>
+                android:id="@+id/imageView_itemPhoto"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
                 <TextView
+                    android:id="@+id/textView_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3 items remains"
@@ -176,6 +178,7 @@
                     android:paddingBottom="10dp"/>
 
                 <TextView
+                    android:id="@+id/textView_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Hàng dễ vỡ...."/>

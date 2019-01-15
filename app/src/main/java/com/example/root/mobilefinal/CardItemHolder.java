@@ -18,30 +18,31 @@ public class CardItemHolder extends RecyclerView.ViewHolder {
 
     public CardItemHolder(View view) {
         super(view);
-        imageView_avatar = view.findViewById(R.id.imageView_item);
+        imageView_avatar = view.findViewById(R.id.imageView_itemImage);
         textView_name = view.findViewById(R.id.textView_itemName);
         textView_price = view.findViewById(R.id.textView_price);
-        textView_shopName = view.findViewById(R.id.quantityNumber);
+        textView_shopName = view.findViewById(R.id.textView_shopName);
         quantityNumber = view.findViewById(R.id.quantityNumber);
     }
 
-    public void bind(Map<String, Object> cartItem) {
-        Backend.getItem(cartItem.get("iid").toString(), new Backend.Callback<Item>() {
+    public void bind(final CartItem cartItem) {
+        Backend.getItem(cartItem.iid, new Backend.Callback<Item>() {
             @Override
             public void call(Item data) {
                 item = data;
+                textView_name.setText(item.name);
+                textView_price.setText(item.price.toString() + " đ");
+                quantityNumber.setRange(0, Integer.valueOf(item.quantity));
+                quantityNumber.setNumber(cartItem.quantity);
             }
         });
 
-        Backend.downloadAvatar("avatar/item/" + item.iid + ".jpg", new Backend.Callback<Bitmap>() {
+        Backend.downloadAvatar("avatar/item/" + cartItem.iid + ".jpg", new Backend.Callback<Bitmap>() {
             @Override
             public void call(Bitmap data) {
                 imageView_avatar.setImageBitmap(data);
             }
         });
-        textView_name.setText(item.name);
-        textView_price.setText(item.price.toString() + " đ");
-        quantityNumber.setRange(0, Integer.valueOf(item.quantity));
-        quantityNumber.setNumber(cartItem.get("quantity").toString());
+
     }
 }

@@ -74,7 +74,7 @@ exports.addCart = functions.https.onCall((data, context) => {
     console.log('quantity ' + quantity);
     console.log('cid ' + cid);
 
-    admin.database().ref('/carts').push({cid: cid, uid: uid, iid: iid, quantity: quantity}).then(() {
+    return admin.database().ref('/carts').push({cid: cid, uid: uid, iid: iid, quantity: quantity}).then(() => {
         return {cid: cid};
     });
 });

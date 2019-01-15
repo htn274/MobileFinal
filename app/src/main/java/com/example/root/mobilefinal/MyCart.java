@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class MyCart extends AppCompatActivity {
 
@@ -25,20 +26,47 @@ public class MyCart extends AppCompatActivity {
 
     void initViews(){
         textView_totalPrice = findViewById(R.id.textView_totalPrice);
+        rv_cartItem = findViewById(R.id.rv_cartItem);
     }
 
-//    private int getTotalPrice(List<CartItem> cartItemList){
-//        return 0;
-//    }
+    private void getTotalPrice(List<CartItem> cartItemList, final Backend.Callback<Integer> cb){
+        final Integer[] sum = {0};
+        final Integer[] cnt = { cartItemList.size() };
+        final Semaphore mut = new Semaphore(1);
+        for (final CartItem item: cartItemList)
+            Backend.getItem(item.iid, new Backend.Callback<Item>() {
+                @Override
+                public void call(Item data) {
+                    try {
+                        mut.acquire();
+                        cnt[0]--;
+                        sum[0] += Integer.valueOf(data.price) * Integer.valueOf(item.quantity);
+                        if (cnt[0] == 0) {
+                            cb.call(sum[0]);
+                        }
+                        mut.release();
+                    }
+                    catch (InterruptedException ex) {
+
+                    }
+                }
+            });
+    }
 
     private void setCartItem() {
-        Backend.getCart(new Backend.Callback<Cart>() {
+        Backend.getCart(new Backend.Callback<List<CartItem>>() {
             @Override
-            public void call(Cart data) {
+            public void call(List<CartItem> data) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rv_cartItem.setLayoutManager(linearLayoutManager);
-                rv_cartItem.setAdapter(new CardItemAdapter(getApplicationContext(), data.items));
+                rv_cartItem.setAdapter(new CardItemAdapter(getApplicationContext(), data));
+                getTotalPrice(data, new Backend.Callback<Integer>() {
+                    @Override
+                    public void call(Integer data)  {
+                        textView_totalPrice.setText(data.toString());
+                    }
+                });
             }
         });
     }

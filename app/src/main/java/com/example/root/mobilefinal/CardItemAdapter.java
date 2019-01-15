@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 public class CardItemAdapter extends RecyclerView.Adapter {
-    List<Map<String, Object>> cartItemList;
+    List<CartItem> cartItemList;
     Context context;
 
-    public CardItemAdapter(Context context, List<Map<String, Object>> cartItemList) {
+    public CardItemAdapter(Context context, List<CartItem> cartItemList) {
         this.context = context;
         this.cartItemList = cartItemList;
     }

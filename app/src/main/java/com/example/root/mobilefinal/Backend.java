@@ -111,12 +111,12 @@ public class Backend {
                     Shop shop = ds.getValue(Shop.class);
                     Log.d("btag", "shop iterable: sid " + shop.sid);
                     if (shop.sid .equals(sid)) {
-                        cb.call(shop);
+                            cb.call(shop);
                         ref.removeEventListener(this);
                         return;
                     }
                 }
-                cb.call(null);
+                    cb.call(null);
                 ref.removeEventListener(this);
             }
 
@@ -132,10 +132,10 @@ public class Backend {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    cb.call(task.getResult().getUser().getUid());
+                        cb.call(task.getResult().getUser().getUid());
                 }
                 else {
-                    cb.call(null);
+                        cb.call(null);
                 }
             }
         });

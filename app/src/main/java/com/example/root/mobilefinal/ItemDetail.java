@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 //import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +32,7 @@ public class ItemDetail extends AppCompatActivity implements View.OnClickListene
     LinearLayout btn_addCart;
     Toolbar toolbar;
     ImageView btn_search, btn_cart;
-//    ElegantNumberButton chosenQuantity;
+    ElegantNumberButton chosenQuantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class ItemDetail extends AppCompatActivity implements View.OnClickListene
         });
         initSpiner(spinner_color, Arrays.asList(((String) data.variation.get("color")).split(" ")));
         initSpiner(spinner_size, Arrays.asList(((String) data.variation.get("size")).split(" ")));
-//        chosenQuantity.setRange(0, Integer.valueOf(thisItem.quantity));
+        chosenQuantity.setRange(0, Integer.valueOf(thisItem.quantity));
     }
 
     void initViews(){
@@ -94,7 +96,7 @@ public class ItemDetail extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-//        chosenQuantity = findViewById(R.id.quantityNumber);
+        chosenQuantity = findViewById(R.id.quantityNumber);
     }
 
     void initSpiner(Spinner spiner, List<String> dataSpiner){
@@ -124,15 +126,15 @@ public class ItemDetail extends AppCompatActivity implements View.OnClickListene
     }
 
     public void addCartAction(){
-//        Backend.addCart(thisItem.iid, chosenQuantity.getNumber(), new Backend.Callback<Boolean>() {
-//            @Override
-//            public void call(Boolean check) {
-//                if (check == true){
-//                    AddCartDialog addCartDialog = new AddCartDialog(textView_itemName.getText().toString(), textView_price.getText().toString());
-//                    addCartDialog.show(getSupportFragmentManager(), "Dialog");
-//                }
-//            }
-//        });
+        Backend.addCart(thisItem.iid, chosenQuantity.getNumber(), new Backend.Callback<Boolean>() {
+            @Override
+            public void call(Boolean check) {
+                if (check == true){
+                    AddCartDialog addCartDialog = new AddCartDialog(textView_itemName.getText().toString(), textView_price.getText().toString());
+                    addCartDialog.show(getSupportFragmentManager(), "Dialog");
+                }
+            }
+        });
 
     }
 }

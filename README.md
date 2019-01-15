@@ -6,9 +6,9 @@
   - [x] Ảnh đại diện của shop
   - [x] Tên shop 
   - [x] Giờ đóng cửa/mở cửa
-  - [ ] Số điện thoại
+  - [x] Địa chỉ
   - [ ] Địa điểm (location)
-  - [ ] Danh sách các sản phẩm: tên, hình ảnh, giá
+  - [x] Danh sách các sản phẩm: tên, hình ảnh, giá
 
 * [ ] Tìm kiếm shop, sản phẩm:
   * [ ] Tìm kiếm cơ bản: text
@@ -22,14 +22,14 @@
 # Các màn hình chính:
 1. [x] Màn hình sign in / sign up
 2. Màn hình trang chủ:
-- Thanh search 
-- Top các shop
-- Top các sản phẩm
-- Danh mục sản phẩm 
+- [x] Thanh search 
+- [x] Top các shop
+- [x] Top các sản phẩm
+- [x] Danh mục sản phẩm 
 3. Profile: 
 - [x] Avatar
 - Hình ảnh (???)
-- [ ] Danh sách sản phẩm yêu thích 
+- [ ] Danh sách sản phẩm đã mua
 - [x] Danh sách shop của mình
 4. [x] Màn hình tạo shop: gồm các thông tin cần thiết 
 5. Màn hình chi tiết shop

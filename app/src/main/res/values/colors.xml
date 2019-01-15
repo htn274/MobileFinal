@@ -10,4 +10,6 @@
     <color name="tabSelected">#ff9900</color>
     <color name="priceColor">#FC2213</color>
     <color name="quantityRemain">#59A204</color>
+    <color name="colorRipple">#A9A9F5</color>
 </resources>
+

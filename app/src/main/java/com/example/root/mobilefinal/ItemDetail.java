@@ -1,26 +1,33 @@
 package com.example.root.mobilefinal;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemDetail extends AppCompatActivity {
+public class ItemDetail extends AppCompatActivity implements View.OnClickListener, AddCartDialog.AddCartListener{
     ImageView imageView_itemPhoto;
     TextView textView_itemName, textView_price, textView_quantity, textView_shopName;
     Item thisItem;
     Spinner spinner_size, spinner_color;
+    LinearLayout btn_addCart;
+    Toolbar toolbar;
+    ImageView btn_search, btn_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,8 @@ public class ItemDetail extends AppCompatActivity {
             }
         });
         textView_itemName.setText(data.name);
-        textView_price.setText(data.price);
-        textView_quantity.setText(data.quantity);
+        textView_price.setText(data.price.toString() + " đ");
+        textView_quantity.setText(data.quantity.toString() + " remain items");
         Backend.getShop(data.sid, new Backend.Callback<Shop>() {
             @Override
             public void call(Shop data) {
@@ -58,6 +65,7 @@ public class ItemDetail extends AppCompatActivity {
     }
 
     void initViews(){
+        toolbar = findViewById(R.id.toolbar_itemDetail);
         imageView_itemPhoto = findViewById(R.id.imageView_itemPhoto);
         textView_itemName = findViewById(R.id.textView_itemName);
         textView_price = findViewById(R.id.textView_price);
@@ -65,11 +73,49 @@ public class ItemDetail extends AppCompatActivity {
         textView_shopName = findViewById(R.id.textView_shopName);
         spinner_color = findViewById(R.id.spiner_color);
         spinner_size = findViewById(R.id.spiner_size);
+
+        btn_addCart = findViewById(R.id.btn_addToCart);
+        btn_addCart.setOnClickListener(this);
+
+        btn_cart = toolbar.findViewById(R.id.btn_cart);
+        btn_cart.setOnClickListener(this);
+        btn_search = toolbar.findViewById(R.id.btn_search);
+        btn_search.setOnClickListener(this);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                finish();
+            }
+        });
     }
 
     void initSpiner(Spinner spiner, List<String> dataSpiner){
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, dataSpiner);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spiner.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == btn_addCart){
+            //Call Backend
+            AddCartDialog addCartDialog = new AddCartDialog(textView_itemName.getText().toString(), textView_price.getText().toString());
+            addCartDialog.show(getSupportFragmentManager(), "Dialog");
+        }
+        else if (view == btn_search){
+            startActivity(new Intent(this, SearchActivity.class));
+        }
+        else if (view == btn_cart){
+            startActivity(new Intent(this, MyCart.class));
+        }
+    }
+
+    @Override
+    public void onButtonCLick(boolean state) {
+        if (state == true){
+            startActivity(new Intent(this, MyCart.class));
+        }
     }
 }

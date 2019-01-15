@@ -19,6 +19,7 @@
         android:layout_height="30dp"
         android:layout_gravity="right"
         android:src="@drawable/ic_shopping_cart_white"
-        android:layout_marginRight="12dp"/>
+        android:layout_marginRight="12dp"
+        android:id="@+id/btn_cart"/>
 
 </android.support.v7.widget.Toolbar>

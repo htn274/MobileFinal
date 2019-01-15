@@ -2,6 +2,7 @@ package com.example.root.mobilefinal;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -56,7 +57,16 @@ public class ShopDetail extends AppCompatActivity {
         btn_getDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                String geo = String.valueOf(thisShop.loc.get("lat")) + "," + String.valueOf(thisShop.loc.get("lng"));
+                Log.i("Geography", geo);
+                Uri gmmIntentUri = Uri.parse("geo:" + geo + "?q=" + geo);
+                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                // Make the Intent explicit by setting the Google Maps package
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                // Attempt to start an activity that can handle the Intent
+                startActivity(mapIntent);
             }
         });
         btn_like = findViewById(R.id.btn_like);

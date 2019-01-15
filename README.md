@@ -65,6 +65,7 @@
 - items: list<{iid, quantity}>
 
 5. Order
+- oid
 - uid
 - items<CartItem>
 - payment_method

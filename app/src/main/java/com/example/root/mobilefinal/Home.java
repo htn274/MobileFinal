@@ -56,7 +56,6 @@ public class Home extends Fragment {
     }
 
     private void setTopShops(){
-
         Backend.getAllShops(new Backend.Callback<List<Shop>>() {
             @Override
             public void call(List<Shop> data) {
@@ -67,5 +66,4 @@ public class Home extends Fragment {
             }
         });
     }
-
 }

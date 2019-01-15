@@ -26,7 +26,6 @@ public class TopItemAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-
         ((TopItemHolder)holder).imageView_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

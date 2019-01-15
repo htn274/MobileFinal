@@ -83,8 +83,25 @@ exports.addCart = functions.https.onCall((data, context) => {
                 });
             }
         });
-        return ref.push({uid: uid, items: [{iid: iid, quantity: quantity}]}).then(() => {
+        return db.push({uid: uid, items: [{iid: iid, quantity: quantity}]}).then(() => {
             return {ok: true};
         });
+    });
+});
+
+exports.addOrder = functions.https.onCall((data, context) => {
+    const uid = data.uid;
+    const items = data.items;
+    const payment_method = data.payment_method;
+    const address = data.address;
+    const oid = (new Date()).getTime().toString();
+
+    console.log('uid ' + uid);
+    console.log('items ' + items);
+    console.log('payment_method ' + payment_method);
+    console.log('address ' + address);
+
+    return admin.database().ref('/orders').push({oid: oid, uid: uid, items: items, payment_method: payment_method, address: address}).then(() => {
+        return {oid: oid};
     });
 });

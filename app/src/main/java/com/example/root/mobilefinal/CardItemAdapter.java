@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Map;
 
 public class CardItemAdapter extends RecyclerView.Adapter {
-    List<CartItem> cartItemList;
+    List<Map<String, Object>> cartItemList;
     Context context;
 
-    public CardItemAdapter(Context context, List<CartItem> cartItemList) {
+    public CardItemAdapter(Context context, List<Map<String, Object>> cartItemList) {
         this.context = context;
         this.cartItemList = cartItemList;
     }

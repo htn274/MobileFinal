@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
+import java.util.Map;
+
 public class CardItemHolder extends RecyclerView.ViewHolder {
     ImageView imageView_avatar;
     TextView textView_name, textView_price, textView_shopName;
@@ -23,8 +25,8 @@ public class CardItemHolder extends RecyclerView.ViewHolder {
         quantityNumber = view.findViewById(R.id.quantityNumber);
     }
 
-    public void bind(CartItem cartItem) {
-        Backend.getItem(cartItem.iid, new Backend.Callback<Item>() {
+    public void bind(Map<String, Object> cartItem) {
+        Backend.getItem(cartItem.get("iid").toString(), new Backend.Callback<Item>() {
             @Override
             public void call(Item data) {
                 item = data;
@@ -40,6 +42,6 @@ public class CardItemHolder extends RecyclerView.ViewHolder {
         textView_name.setText(item.name);
         textView_price.setText(item.price.toString() + " đ");
         quantityNumber.setRange(0, Integer.valueOf(item.quantity));
-        quantityNumber.setNumber(cartItem.quantity);
+        quantityNumber.setNumber(cartItem.get("quantity").toString());
     }
 }

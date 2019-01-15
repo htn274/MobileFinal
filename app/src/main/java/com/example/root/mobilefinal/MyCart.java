@@ -19,6 +19,7 @@ public class MyCart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cart);
+        initViews();
         setCartItem();
     }
 
@@ -26,19 +27,18 @@ public class MyCart extends AppCompatActivity {
         textView_totalPrice = findViewById(R.id.textView_totalPrice);
     }
 
-    private int getTotalPrice(List<CartItem> cartItemList){
-        return 0;
-    }
+//    private int getTotalPrice(List<CartItem> cartItemList){
+//        return 0;
+//    }
 
     private void setCartItem() {
-        Backend.getCartItems(new Backend.Callback<List<CartItem>>() {
+        Backend.getCart(new Backend.Callback<Cart>() {
             @Override
-            public void call(List<CartItem> data) {
+            public void call(Cart data) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rv_cartItem.setLayoutManager(linearLayoutManager);
-                rv_cartItem.setAdapter(new CardItemAdapter(getApplicationContext(), data));
-
+                rv_cartItem.setAdapter(new CardItemAdapter(getApplicationContext(), data.items));
             }
         });
     }

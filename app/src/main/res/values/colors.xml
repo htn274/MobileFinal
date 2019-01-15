@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#ef4e33</color>
     <color name="colorAccent">#D81B60</color>
     <color name="White">#ffffff</color>
+    <color name="Black">#000000</color>
     <color name="bgBottomNavigation">#ff9900</color>
     <color name="gray">#b1b0b0</color>
     <color name="tabSelected">#ff9900</color>
+    <color name="priceColor">#FC2213</color>
+    <color name="quantityRemain">#59A204</color>
 </resources>

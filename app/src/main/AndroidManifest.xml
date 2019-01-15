@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".ItemDetail"></activity>
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,29 +25,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddItem"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Signup"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".ShopDetail"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".AddShopForm"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".AddItem"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Signup"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ShopDetail"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".AddShopForm"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <!--              The API key for Google Maps-based APIs. -->
+            android:value="@integer/google_play_services_version" /> <!-- The API key for Google Maps-based APIs. -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ManageShopActivity"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+        <activity
+            android:name=".ManageShopActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

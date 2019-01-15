@@ -1,6 +1,7 @@
 package com.example.root.mobilefinal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +26,13 @@ public class TopItemAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        ((TopItemHolder)holder).imageView_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(context, ItemDetail.class);
-//                intent.putExtra("iid", itemList.get(position).iid);
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, ItemDetail.class);
+                intent.putExtra("iid", itemList.get(position).iid);
+                context.startActivity(intent);
             }
         });
         ((TopItemHolder)holder).bind(itemList.get(position));

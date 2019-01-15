@@ -18,7 +18,6 @@ public class ItemHolder extends RecyclerView.ViewHolder {
         textView_name = view.findViewById(R.id.textView_name);
         textView_category = view.findViewById(R.id.textView_category);
         textView_price = view.findViewById(R.id.textView_price);
-        textView_variation = view.findViewById(R.id.textView_variation);
 
         button_menu = view.findViewById(R.id.btn_menu);
 
@@ -33,7 +32,7 @@ public class ItemHolder extends RecyclerView.ViewHolder {
         });
         textView_name.setText(item.name);
         textView_category.setText(item.category);
-        textView_price.setText(item.price.toString());
-        textView_variation.setText(String.format("color: %s - size: %s", item.variation.get("color"), item.variation.get("size")));
+        textView_price.setText(item.price.toString() + " đ");
+//        textView_variation.setText(String.format("color: %s - size: %s", item.variation.get("color"), item.variation.get("size")));
     }
 }

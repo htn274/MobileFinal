@@ -27,6 +27,12 @@ public class SearchActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+
     private void initViews(){
         rv_search = findViewById(R.id.rv_searchResult);
         rv_search.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -36,12 +42,12 @@ public class SearchActivity extends AppCompatActivity {
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 List<String> suggest = new ArrayList<>();
+                if (suggest.size() == 0) return;
                 for (String search : suggestList){
                     if (search.toLowerCase().contains(searchBar.getText().toString().toLowerCase())){
                         suggest.add(search);

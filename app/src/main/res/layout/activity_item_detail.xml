@@ -21,8 +21,12 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:src="@drawable/profile"
-                android:id="@+id/imageView_itemPhoto"/>
+                android:src="@drawable/no_image"
+                android:id="@+id/imageView_itemPhoto"
+                android:paddingBottom="10dp"
+                android:background="@drawable/light_gray_rect"
+                >
+            </ImageView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,15 +65,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shop:"
+                        android:text="Shop"
                         android:paddingRight="15dp"
-                        android:textSize="15dp"/>
+                        android:textSize="20dp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Shop name"
                         android:textStyle="bold"
-                        android:textSize="15dp"
+                        android:textSize="20dp"
                         android:id="@+id/textView_shopName"/>
                 </LinearLayout>
 
@@ -86,16 +90,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp">
                     <TextView
-                        android:layout_width="50dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Color"
-                        android:textSize="15dp"
-                        android:paddingRight="15dp"/>
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        android:paddingRight="10dp"/>
 
                                 <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
+                                    android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:id="@+id/spiner_color" />
@@ -105,19 +112,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp">
                     <TextView
-                        android:layout_width="50dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Size"
-                        android:textSize="15dp"
-                        android:paddingRight="15dp"/>
+                        android:textSize="20dp"
+                        android:paddingRight="10dp"
+                        android:layout_weight="2"/>
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:id="@+id/spiner_size"/>
+                        android:id="@+id/spiner_size"
+                        android:layout_weight="1"/>
 
                 </LinearLayout>
 
@@ -125,12 +135,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/quantityNumber"
                         app:backGroundColor="@color/White"
                         app:textColor="@color/Black"
-                        app:textSize="5dp"
+                        app:textSize="8dp"
+                        android:layout_marginRight="10dp"
                         >
                     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
@@ -144,7 +155,8 @@
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:paddingRight="20dp"
-                        android:layout_alignParentRight="true">
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/btn_addToCart">
 
                         <ImageView
                             android:layout_weight="1"
@@ -152,8 +164,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_shopping_cart_white"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginRight="10dp"
-                            android:id="@+id/btn_addToCart"/>
+                            android:layout_marginRight="10dp" />
 
                         <TextView
                             android:layout_width="wrap_content"

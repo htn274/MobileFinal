@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ public class Home extends Fragment implements View.OnClickListener{
 
     RecyclerView rv_topItems, rv_topShop;
     EditText searchBar;
+    Toolbar toolbar;
+
     public Home() {
         // Required empty public constructor
     }
@@ -46,6 +49,14 @@ public class Home extends Fragment implements View.OnClickListener{
 
         searchBar = v.findViewById(R.id.editText_searchBar);
         searchBar.setOnClickListener(this);
+
+        toolbar = v.findViewById(R.id.toolbar_home);
+        (toolbar.findViewById(R.id.btn_cart)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MyCart.class));
+            }
+        });
     }
 
     private void setTopItems(){

@@ -34,7 +34,7 @@ public class TopShopAdapter extends RecyclerView.Adapter {
             }
         });
 
-        ((TopShopHolder)holder).textView_name.setOnClickListener(new View.OnClickListener() {
+        ((TopShopHolder)holder).imageView_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ShopDetail.class);

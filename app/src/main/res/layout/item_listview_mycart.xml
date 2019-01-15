@@ -54,7 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:backGroundColor="@color/White"
-                app:textColor="@color/Black">
+                app:textColor="@color/Black"
+                android:id="@+id/quantityNumber">
             </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
         </LinearLayout>
 

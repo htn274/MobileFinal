@@ -517,7 +517,7 @@ public class Backend {
         });
     }
 
-    public static void getCartItems(String uid, final Callback<List<CartItem>> cb) {
+    public static void getCartItems(final Callback<List<CartItem>> cb) {
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.addValueEventListener(new ValueEventListener() {
             @Override

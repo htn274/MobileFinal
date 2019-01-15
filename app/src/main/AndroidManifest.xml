@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Signup" />
-        <activity android:name=".ShopDetail" />
-        <activity android:name=".AddShopForm" />
-        <activity android:name=".AddItem">
-
-            <!-- <meta-data tools:replace="android:value"></meta-data> -->
-        </activity>
+        <activity android:name=".AddItem"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Signup"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".ShopDetail"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".AddShopForm"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -42,7 +45,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ManageShopActivity"></activity>
+        <activity android:name=".ManageShopActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
     </application>
 
 </manifest>

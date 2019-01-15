@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#ffffff">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/light_gray_rect"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/btn_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_heart_border"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView_avatarShop"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/profile1"/>
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shop Name"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textView_shopName"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+</LinearLayout>

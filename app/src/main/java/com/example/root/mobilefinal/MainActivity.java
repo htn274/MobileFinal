@@ -10,22 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    public ActionBar toolbar;
+    public android.support.v7.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = getSupportActionBar();
         BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigationView.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
-        toolbar.setTitle("BaNu");
         loadFragment(new Home());
     }
 
@@ -37,17 +36,17 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    toolbar.setTitle("BaNu");
                     fragment = new Home();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_notifications:
-                    toolbar.setTitle("Notifications");
+//                    toolbar.setTitle("Notifications");
+//                    toolbar.show();
                     fragment = new Noti();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
-                    toolbar.hide();
+//                    toolbar.hide();
                     fragment = new ProfileUser();
                     loadFragment(fragment);
                     return true;

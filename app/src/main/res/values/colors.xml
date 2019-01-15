@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ff9900</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#ef4e33</color>
     <color name="colorAccent">#D81B60</color>
     <color name="White">#ffffff</color>
     <color name="bgBottomNavigation">#ff9900</color>

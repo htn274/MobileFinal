@@ -6,15 +6,17 @@
     tools:context=".ManageShopItemFragment">
 
     <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/ic_add_circle"
-        android:drawablePadding="15dp"
-        android:background="@color/White"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/White"
         android:id="@+id/btn_addItem"
-        android:paddingRight="10dp"
+        android:layout_alignParentRight="true"
         />
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

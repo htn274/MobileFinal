@@ -16,8 +16,8 @@
             android:orientation="horizontal">
             <ImageView
                 android:layout_marginLeft="10dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="10dp"
@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:textSize="25dp"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="10dp"
@@ -59,7 +59,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:textSize="25dp"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -76,8 +76,8 @@
             android:orientation="horizontal">
             <ImageView
                 android:layout_marginLeft="10dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="10dp"
@@ -89,7 +89,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:textSize="25dp"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
             <ImageView
                 android:layout_width="wrap_content"

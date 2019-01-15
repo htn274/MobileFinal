@@ -57,10 +57,10 @@ class Shop {
         return map;
     }
 }
-
-class Cart {
+class CartItem {
     String uid;
-    List<Map<String, String>> items;
+    String iid;
+    String quantity;
 }
 
 class Item {
@@ -517,21 +517,21 @@ public class Backend {
         });
     }
 
-    public static void getCart(final Callback<Cart> cb) {
+    public static void getCart(final Callback<List<CartItem>> cb) {
         final String uid = FirebaseAuth.getInstance().getUid();
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<CartItem> cartItems = new ArrayList<>();
                 for (DataSnapshot ds: dataSnapshot.child("carts/").getChildren()) {
-                    Cart cart = ds.getValue(Cart.class);
-                    if (cart.uid.equals(uid)) {
-                        cb.call(cart);
-                        ref.removeEventListener(this);
-                        return;
+                    Log.d("btag/getCart", ds.toString());
+                    CartItem cartItem = ds.getValue(CartItem.class);
+                    if (cartItem.uid.equals(uid)) {
+                        cartItems.add(cartItem);
                     }
                 }
-                cb.call(null);
+                cb.call(cartItems);
                 ref.removeEventListener(this);
             }
 

@@ -67,25 +67,15 @@ exports.addCart = functions.https.onCall((data, context) => {
     const uid = data.uid;
     const iid = data.iid;
     const quantity = data.quantity;
+    const cid = (new Date()).getTime().toString();
 
     console.log('uid ' + uid);
     console.log('iid ' + iid)
     console.log('quantity ' + quantity);
+    console.log('cid ' + cid);
 
-    var db = admin.database().ref('/carts');
-    db.once("value", (datasnap) => {
-        datasnap.forEach((data) => {
-            console.log(data.key + ' ' + data.val().uid + ' ' + uid);
-            if (data.val().uid === uid) {
-                console.log('data.uid == uid')
-                return data.ref.child('items').push({iid: iid, quantity: quantity}).then(() => {
-                    return {ok: true};
-                });
-            }
-        });
-        return db.push({uid: uid, items: [{iid: iid, quantity: quantity}]}).then(() => {
-            return {ok: true};
-        });
+    admin.database().ref('/carts').push({cid: cid, uid: uid, iid: iid, quantity: quantity}).then(() {
+        return {cid: cid};
     });
 });
 

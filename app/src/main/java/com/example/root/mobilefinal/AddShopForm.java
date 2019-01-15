@@ -153,7 +153,6 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
             double lat = pickedPlace.getLatLng().latitude;
             double lng = pickedPlace.getLatLng().longitude;
 
-
             Backend.addShop(this, uid, shopname, address, lat, lng, openHour, closeHour, new Backend.Callback<String>() {
                 @Override
                 public void call(String sid) {

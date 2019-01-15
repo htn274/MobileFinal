@@ -46,7 +46,7 @@ public class ShopListItemsFragment extends Fragment {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rv_shopItems.setLayoutManager(linearLayoutManager);
-                rv_shopItems.setAdapter(new ItemAdapter(getContext(), data));
+                rv_shopItems.setAdapter(new ItemAdapter(getContext(), data, false));
             }
         });
 

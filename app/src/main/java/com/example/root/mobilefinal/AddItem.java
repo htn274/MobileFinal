@@ -19,11 +19,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_PICK_IMAGE = 8846;
+    static List<String> categories;
+    static {
+        categories = Arrays.asList(new String[] {"Clothes", "Shoes", "Accessories"});
+    }
     Spinner spnCategory;
     ImageView imageView_item;
     EditText editText_itemName;
@@ -49,6 +58,73 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         initViews();
         initCategory();
         loadImage();
+        
+        initEdit();
+    }
+
+    private void initEdit() {
+        String iid = getIntent().getStringExtra("iid");
+        if (iid == null) {
+            return;
+        }
+        
+        Backend.getItem(iid, new Backend.Callback<Item>() {
+            @Override
+            public void call(Item data) {
+                bindDefaultInfo(data);
+            }
+        });
+        Backend.downloadAvatar("avatar/item/" + iid + ".jpg", new Backend.Callback<Bitmap>() {
+            @Override
+            public void call(Bitmap data) {
+                if (data != null) {
+                    chosenAvatar = data;
+                    Glide
+                            .with(getApplicationContext())
+                            .load(bitmapToByte(data))
+                            .asBitmap()
+                            .override(200, 200)
+                            .centerCrop()
+                            .into(imageView_item);
+                }
+            }
+        });
+    }
+
+    private void bindDefaultInfo(final Item data) {
+        selectedCategory = data.category;
+        spnCategory.setSelection(categories.indexOf(data.category));
+        chosenColor = data.variation.get("color");
+        chosenSize = data.variation.get("size");
+        editText_itemName.setText(data.name);
+        editText_description.setText(data.description);
+        editText_price.setText(data.price);
+        editText_quantity.setText(data.quantity);
+
+        btn_done.setText("Save");
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String iid = data.iid;
+                String name = editText_itemName.getText().toString();
+                String description = editText_description.getText().toString();
+                String price = editText_price.getText().toString();
+                String quantity = editText_quantity.getText().toString();
+
+                Backend.updateItem(iid, name, description, selectedCategory, price, quantity, chosenColor, chosenSize, new Backend.Callback<Boolean>() {
+                    @Override
+                    public void call(Boolean successfully) {
+                        if (successfully) {
+                            Log.d("btag", "update item successfully, iid " + iid);
+                            finish();
+                        }
+                        else {
+                            Log.d("btag", "update item failed, iid " + iid);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     void initViews(){
@@ -68,7 +144,6 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     }
 
     void initCategory(){
-        String[] categories = {"Clothes", "Shoes", "Accessories"};
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnCategory.setAdapter(adapter);
@@ -141,5 +216,15 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             chosenAvatar = ImagePicker.getImageFromResult(this, resultCode, data);
             imageView_item.setImageBitmap(chosenAvatar);
         }
+    }
+
+    private byte[] bitmapToByte(Bitmap bitmap){
+        if (bitmap == null) {
+            return null;
+        }
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 }

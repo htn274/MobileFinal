@@ -45,7 +45,7 @@ exports.addItem = functions.https.onCall((data, context) => {
     const price = data.price;
     const quantity = data.quantity;
     const color = data.color;
-    const size = data.color;
+    const size = data.size;
     const iid = (new Date()).getTime().toString();
     
     console.log('iid ' + iid);

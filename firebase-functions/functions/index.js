@@ -72,11 +72,13 @@ exports.addCart = functions.https.onCall((data, context) => {
     console.log('iid ' + iid)
     console.log('quantity ' + quantity);
 
-    var ref = admin.database().ref('/carts');
-    ref.once("value", (datasnap) => {
+    var db = admin.database().ref('/carts');
+    db.once("value", (datasnap) => {
         datasnap.forEach((data) => {
-            if (data.uid === uid) {
-                return ref.ref(data.key + '/items').push({iid: iid, quantity: quantity}).then(() => {
+            console.log(data.key + ' ' + data.val().uid + ' ' + uid);
+            if (data.val().uid === uid) {
+                console.log('data.uid == uid')
+                return data.ref.child('items').push({iid: iid, quantity: quantity}).then(() => {
                     return {ok: true};
                 });
             }

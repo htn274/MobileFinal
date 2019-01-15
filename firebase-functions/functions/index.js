@@ -62,3 +62,27 @@ exports.addItem = functions.https.onCall((data, context) => {
         return {iid: iid};
     });
 });
+
+exports.addCart = functions.https.onCall((data, context) => {
+    const uid = data.uid;
+    const iid = data.iid;
+    const quantity = data.quantity;
+
+    console.log('uid ' + uid);
+    console.log('iid ' + iid)
+    console.log('quantity ' + quantity);
+
+    var ref = admin.database().ref('/carts');
+    ref.once("value", (datasnap) => {
+        datasnap.forEach((data) => {
+            if (data.uid === uid) {
+                return ref.ref(data.key + '/items').push({iid: iid, quantity: quantity}).then(() => {
+                    return {ok: true};
+                });
+            }
+        });
+        return ref.push({uid: uid, items: [{iid: iid, quantity: quantity}]}).then(() => {
+            return {ok: true};
+        });
+    });
+});

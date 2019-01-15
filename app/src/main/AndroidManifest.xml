@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MyCart"></activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".MyCart" />
         <activity android:name=".ItemDetail" />
         <activity android:name=".Login">
             <intent-filter>
@@ -26,16 +27,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddItem"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Signup"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".ShopDetail"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".AddShopForm"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".AddItem"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Signup"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ShopDetail"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".AddShopForm"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <meta-data
             android:name="com.google.android.gms.version"

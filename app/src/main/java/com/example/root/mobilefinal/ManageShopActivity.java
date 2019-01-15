@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ public class ManageShopActivity extends AppCompatActivity {
     ManageShopPageAdapter adapter;
     Shop thisShop;
     ImageView imageView_shopImage;
+    ImageView btn_editShop;
     TextView tv_shopName, tv_address, tv_activeHour;
     String sid;
 
@@ -49,6 +51,16 @@ public class ManageShopActivity extends AppCompatActivity {
         tv_shopName = findViewById(R.id.tv_shopName);
         tv_address = findViewById(R.id.textView_address);
         tv_activeHour = findViewById(R.id.textView_activeHour);
+
+        btn_editShop = findViewById(R.id.btn_editShop);
+        btn_editShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddShopForm.class);
+                intent.putExtra("sid", sid);
+                startActivity(intent);
+            }
+        });
     }
 
     void setUI() {
@@ -56,8 +68,7 @@ public class ManageShopActivity extends AppCompatActivity {
         pager = (ViewPager) this.findViewById(R.id.view_pager);
         tabLayout = (TabLayout) this.findViewById(R.id.tab_layout);
         FragmentManager manager = this.getSupportFragmentManager();
-        adapter = new ManageShopPageAdapter(manager);
-        adapter.sid = sid;
+        adapter = new ManageShopPageAdapter(manager, sid);
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

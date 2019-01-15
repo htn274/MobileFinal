@@ -35,6 +35,7 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
     private static final int PICK_IMAGE_ID = 2;
     Place pickedPlace;
     Bitmap chosenAvatar;
+    String sid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_add_shop_form);
         AddShopForm.this.setTitle("New Shop");
         initView();
+        initEdit(); // call only when editing
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -49,6 +51,60 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(this, this)
                 .build();
+    }
+
+    private void initEdit() {
+        sid = getIntent().getStringExtra("sid");
+        if (sid == null) {
+            return;
+        }
+
+        Backend.getShop(sid, new Backend.Callback<Shop>() {
+            @Override
+            public void call(Shop data) {
+                bindDefaultInfo(data);
+            }
+        });
+        Backend.downloadAvatar("avatar/shop/" + sid + ".jpg", new Backend.Callback<Bitmap>() {
+            @Override
+            public void call(Bitmap data) {
+                if (data != null) {
+                    chosenAvatar = data;
+                    Glide
+                        .with(getApplicationContext())
+                        .load(bitmapToByte(data))
+                        .asBitmap()
+                        .override(200, 200)
+                        .centerCrop()
+                        .into(avatar);
+                }
+            }
+        });
+    }
+
+    void bindDefaultInfo(Shop shop) {
+        editText_shopName.setText(shop.name);
+        editText_location.setText(shop.address);
+        editText_openHour.setText(shop.open_hour);
+        editText_closeHour.setText(shop.close_hour);
+
+        btn_next.setText("Save");
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editText_shopName.getText().toString();
+                String address = editText_location.getText().toString();
+                String openHour = editText_openHour.getText().toString();
+                String closehour = editText_closeHour.getText().toString();
+                Backend.updateShop(sid, name, address, openHour, closehour, new Backend.Callback<Boolean>() {
+                    @Override
+                    public void call(Boolean data) {
+                        finish();
+                    }
+                });
+                Backend.uploadAvatar("avatar/shop/" + sid + ".jpg", chosenAvatar);
+            }
+        });
     }
 
     void initView(){
@@ -129,6 +185,9 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
     }
 
     private byte[] bitmapToByte(Bitmap bitmap){
+        if (bitmap == null) {
+            return null;
+        }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] byteArray = stream.toByteArray();
@@ -139,7 +198,11 @@ public class AddShopForm extends AppCompatActivity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case PICK_IMAGE_ID:
-                chosenAvatar = ImagePicker.getImageFromResult(this, resultCode, data);
+                Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+                if (bitmap == null) {
+                    break;
+                }
+                chosenAvatar = bitmap;
                 // TODO use bitmap
                 Glide.
                         with(this)

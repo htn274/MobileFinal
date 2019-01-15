@@ -43,7 +43,19 @@ class Shop {
     String open_hour;
     String close_hour;
     Long likes;
-    Bitmap avatar;
+
+    public HashMap<String, Object> toMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("sid", sid);
+        map.put("uid", uid);
+        map.put("name", name);
+        map.put("address", address);
+        map.put("loc", loc);
+        map.put("open_hour", open_hour);
+        map.put("close_hour", close_hour);
+//        map.put("likes", likes);
+        return map;
+    }
 }
 
 class Item {
@@ -69,6 +81,7 @@ public class Backend {
     }
 
     public static void getShop(final String sid, final Callback<Shop> cb) {
+        Log.d("btag", "getShop sid " + sid);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
 
@@ -77,8 +90,10 @@ public class Backend {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.child("shops").getChildren()) {
                     Shop shop = ds.getValue(Shop.class);
+                    Log.d("btag", "shop iterable: sid " + shop.sid);
                     if (shop.sid .equals(sid)) {
                         cb.call(shop);
+                        return;
                     }
                 }
                 cb.call(null);
@@ -128,9 +143,10 @@ public class Backend {
         });
     }
 
-    public static void uploadAvatar(String filename, Bitmap chosenAvatar) {
+    public static void uploadAvatar(final String filename, Bitmap chosenAvatar) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         if (chosenAvatar != null) {
+            cache.put(filename, chosenAvatar);
             StorageReference ref = storage.getReference();
             final StorageReference avatarRef = ref.child(filename);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -323,6 +339,33 @@ public class Backend {
                     }
                 }
                 cb.call(shopItems);
+            }
+        });
+    }
+
+    public static void updateShop(final String sid, final String name, final String address, final String openHour, final String closeHour, final Callback<Boolean> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.child("shops").getChildren()) {
+                    Shop shop = ds.getValue(Shop.class);
+                    if (shop.sid.equals(sid)) {
+                        shop.name = name;
+                        shop.address = address;
+                        shop.open_hour = openHour;
+                        shop.close_hour = closeHour;
+                        ds.getRef().setValue(shop.toMap());
+                        cb.call(true);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

@@ -76,7 +76,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedCategory = spnCategory.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), spnCategory.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), spnCategory.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

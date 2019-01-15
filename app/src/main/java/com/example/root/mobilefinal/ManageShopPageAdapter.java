@@ -8,8 +8,9 @@ import android.util.Log;
 
 public class ManageShopPageAdapter extends FragmentStatePagerAdapter {
     String sid;
-    public ManageShopPageAdapter(FragmentManager fm) {
+    public ManageShopPageAdapter(FragmentManager fm, String sid) {
         super(fm);
+        this.sid = sid;
     }
 
     @Override

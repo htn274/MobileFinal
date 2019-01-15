@@ -128,7 +128,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             });
         }
         else if (view == btn_uploadPhoto) {
-            Intent intent = new Intent(this, ImagePicker.class);
+            Intent intent = ImagePicker.getPickImageIntent(this);
             startActivityForResult(intent, RC_PICK_IMAGE);
         }
     }

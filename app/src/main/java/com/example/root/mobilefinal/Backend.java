@@ -64,10 +64,10 @@ class Item {
     String sid;
     String description;
     String category;
-    Long price;
-    Long quantity;
+    String price;
+    String quantity;
     Map<String, String> variation;
-    Long buys;
+    String buys;
 }
 
 public class Backend {
@@ -83,7 +83,7 @@ public class Backend {
     public static void getShop(final String sid, final Callback<Shop> cb) {
         Log.d("btag", "getShop sid " + sid);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference();
+        final DatabaseReference ref = database.getReference();
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,15 +93,17 @@ public class Backend {
                     Log.d("btag", "shop iterable: sid " + shop.sid);
                     if (shop.sid .equals(sid)) {
                         cb.call(shop);
+                        ref.removeEventListener(this);
                         return;
                     }
                 }
                 cb.call(null);
+                ref.removeEventListener(this);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                ref.removeEventListener(this);
             }
         });
     }
@@ -237,7 +239,7 @@ public class Backend {
     public static void getAllItems(final Callback<List<Item>> cb) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        DatabaseReference databaseReference = database.getReference();
+        final DatabaseReference databaseReference = database.getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -251,17 +253,19 @@ public class Backend {
                     Log.d("btag", "category " + item.category);
                     Log.d("btag", "price " + item.price);
                     Log.d("btag", "quantity " + item.quantity);
-                    Log.d("btag", "buys " + item.buys);
+//                    Log.d("btag", "buys " + item.buys);
                     Log.d("btag", "color" + item.variation.get("color"));
                     Log.d("btag", "size" + item.variation.get("size"));
 
                     items.add(item);
                 }
                 cb.call(items);
+                databaseReference.removeEventListener(this);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("btag", "DatabaseError getMyShops");
+                databaseReference.removeEventListener(this);
             }
         });
     }
@@ -269,7 +273,7 @@ public class Backend {
     public static void getAllShops(final Callback<List<Shop>> cb) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        DatabaseReference databaseReference = database.getReference();
+        final DatabaseReference databaseReference = database.getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -286,11 +290,13 @@ public class Backend {
                     Log.d("btag", "lng " + shop.loc.get("lng").toString());
                     shops.add(shop);
                 }
+                databaseReference.removeEventListener(this);
                 cb.call(shops);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("btag", "DatabaseError getMyShops");
+                databaseReference.removeEventListener(this);
             }
         });
     }
@@ -329,6 +335,7 @@ public class Backend {
     }
 
     public static void getShopItems(final String sid, final Callback<List<Item>> cb) {
+        Log.d("btag", "getShopItems " + sid);
         getAllItems(new Callback<List<Item>>() {
             @Override
             public void call(List<Item> data) {
@@ -336,6 +343,7 @@ public class Backend {
                 for (Item item : data) {
                     if (item.sid.equals(sid)) {
                         shopItems.add(item);
+                        Log.d("btag", "shop item " + sid + " " + item.iid);
                     }
                 }
                 cb.call(shopItems);
@@ -368,5 +376,34 @@ public class Backend {
 
             }
         });
+    }
+
+    public static void deleteShop(final String sid, final Callback<Boolean> cb) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = database.getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.child("shops").getChildren()) {
+                    Shop shop = ds.getValue(Shop.class);
+                    if (shop.sid.equals(sid)) {
+                        ds.getRef().removeValue();
+                        Log.d("btag", "removed shop ref " + shop.sid);
+                        ref.removeEventListener(this);
+                        cb.call(true);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                ref.removeEventListener(this);
+            }
+        });
+    }
+
+    public static void deleteItem(String iid, Callback<Boolean> cb) {
+        // TODO
     }
 }

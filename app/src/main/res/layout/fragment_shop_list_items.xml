@@ -3,17 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShopListItemsFragment">
+    tools:context=".ManageShopItemFragment">
+
+
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_shopItem"
-        layout_constraintLeft_toLeftOf="parent"
-        layout_constraintRight_toRightOf="parent"
-        layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="227dp"
-        tools:layout_editor_absoluteY="40dp"></android.support.v7.widget.RecyclerView>
-
+        android:id="@+id/rv_shopItems">
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

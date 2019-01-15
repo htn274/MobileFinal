@@ -33,14 +33,14 @@ public class ShopAdapter extends RecyclerView.Adapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ManageShopActivity.class);
+                Intent intent = new Intent(context, ShopDetail.class);
                 intent.putExtra("sid", shopList.get(position).sid);
                 context.startActivity(intent);
             }
         });
         ((ShopHolder)holder).bind(shopList.get(position));
 
-        ((ShopHolder) holder).button_menu.setOnClickListener(new View.OnClickListener() {
+        ((ShopHolder)holder).button_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //creating a popup menu
@@ -53,9 +53,20 @@ public class ShopAdapter extends RecyclerView.Adapter {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.myshop_edit:
+                                Intent intent = new Intent(context, ManageShopActivity.class);
+                                intent.putExtra("sid", shopList.get(position).sid);
+                                context.startActivity(intent);
                                 //handle edit shop
                                 break;
                             case R.id.myshop_delete:
+                                Backend.deleteShop(shopList.get(position).sid, new Backend.Callback<Boolean>() {
+                                    @Override
+                                    public void call(Boolean data) {
+                                        shopList.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyDataSetChanged();
+                                    }
+                                });
                                 //handle delete shop
                                 break;
                         }

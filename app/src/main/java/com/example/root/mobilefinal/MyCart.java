@@ -64,7 +64,7 @@ public class MyCart extends AppCompatActivity {
                 getTotalPrice(data, new Backend.Callback<Integer>() {
                     @Override
                     public void call(Integer data)  {
-                        textView_totalPrice.setText(data.toString());
+                        textView_totalPrice.setText(data.toString() + " đ");
                     }
                 });
             }

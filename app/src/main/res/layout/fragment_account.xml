@@ -83,6 +83,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_logout" />
             <TextView
+                android:id="@+id/textView_logOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Log out"

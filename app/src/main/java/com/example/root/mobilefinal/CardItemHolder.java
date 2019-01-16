@@ -14,6 +14,7 @@ public class CardItemHolder extends RecyclerView.ViewHolder {
     ImageView imageView_avatar;
     TextView textView_name, textView_price, textView_shopName;
     ElegantNumberButton quantityNumber;
+    ImageView imageView_deleteCartItem;
     Item item;
 
     public CardItemHolder(View view) {
@@ -23,6 +24,7 @@ public class CardItemHolder extends RecyclerView.ViewHolder {
         textView_price = view.findViewById(R.id.textView_price);
         textView_shopName = view.findViewById(R.id.textView_shopName);
         quantityNumber = view.findViewById(R.id.quantityNumber);
+        imageView_deleteCartItem = view.findViewById(R.id.imageView_deleteCartItem);
     }
 
     public void bind(final CartItem cartItem) {

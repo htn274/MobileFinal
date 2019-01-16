@@ -7,20 +7,17 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,7 +50,12 @@ public class ItemDetail extends AppCompatActivity implements View.OnClickListene
         Backend.downloadAvatar("avatar/item/" + data.iid + ".jpg", new Backend.Callback<Bitmap>() {
             @Override
             public void call(Bitmap data) {
-                imageView_itemPhoto.setImageBitmap(data);
+                Glide
+                        .with(getApplicationContext())
+                        .load(Backend.bitmapToByte(data))
+                        .asBitmap()
+                        .into(imageView_itemPhoto);
+//                imageView_itemPhoto.setImageBitmap(data);
             }
         });
         textView_itemName.setText(data.name);
@@ -126,7 +128,7 @@ public class ItemDetail extends AppCompatActivity implements View.OnClickListene
     }
 
     public void addCartAction(){
-        Backend.addCart(thisItem.iid, chosenQuantity.getNumber(), new Backend.Callback<Boolean>() {
+        Backend.addCartItem(thisItem.iid, chosenQuantity.getNumber(), new Backend.Callback<Boolean>() {
             @Override
             public void call(Boolean check) {
                 if (check == true){

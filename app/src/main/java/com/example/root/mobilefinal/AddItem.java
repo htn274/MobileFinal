@@ -81,7 +81,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                     chosenAvatar = data;
                     Glide
                             .with(getApplicationContext())
-                            .load(bitmapToByte(data))
+                            .load(Backend.bitmapToByte(data))
                             .asBitmap()
                             .override(200, 200)
                             .centerCrop()
@@ -218,13 +218,5 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private byte[] bitmapToByte(Bitmap bitmap){
-        if (bitmap == null) {
-            return null;
-        }
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
-    }
+
 }

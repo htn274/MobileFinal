@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.telecom.Call;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.data.DataBufferRef;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -58,6 +60,7 @@ class Shop {
     }
 }
 class CartItem {
+    String cid;
     String uid;
     String iid;
     String quantity;
@@ -97,6 +100,16 @@ public class Backend {
 
     public interface Callback<T> {
         public void call(T data);
+    }
+
+    public static byte[] bitmapToByte(Bitmap bitmap){
+        if (bitmap == null) {
+            return null;
+        }
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 
     public static void getShop(final String sid, final Callback<Shop> cb) {
@@ -542,13 +555,13 @@ public class Backend {
         });
     }
 
-    public static void addCart(String iid, String quantity, final Callback<Boolean> cb) {
+    public static void addCartItem(String iid, String quantity, final Callback<Boolean> cb) {
         Map<String, String> params = new HashMap<>();
         params.put("iid", iid);
         params.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         params.put("quantity", quantity);
         FirebaseFunctions.getInstance()
-                .getHttpsCallable("addCart")
+                .getHttpsCallable("addCartItem")
                 .call(params)
                 .continueWith(new Continuation<HttpsCallableResult, Boolean>() {
                     @Override
@@ -559,6 +572,70 @@ public class Backend {
             @Override
             public void onComplete(@NonNull Task<Boolean> task) {
                 cb.call(true);
+            }
+        });
+    }
+
+    public static void removeCartItem(final String cid, final Callback<Boolean> cb) {
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.child("carts").getChildren()) {
+                    CartItem cartItem = ds.getValue(CartItem.class);
+                    if (cartItem.cid.equals(cid)) {
+                        ds.getRef().removeValue();
+                        ref.removeEventListener(this);
+                        cb.call(true);
+                        return;
+                    }
+                }
+                cb.call(false);
+                ref.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                cb.call(false);
+                ref.removeEventListener(this);
+            }
+        });
+    }
+
+    public static void updateCartItemQuantity(final String cid, final String newQuantity, final Callback<Long> cb) {
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.child("carts").getChildren()) {
+                    CartItem cartItem = ds.getValue(CartItem.class);
+                    final ValueEventListener valueEventListener = this;
+                    if (cartItem.cid.equals(cid)) {
+                        if (newQuantity.equals("0")) {
+                            Backend.removeCartItem(cid, new Callback<Boolean>() {
+                                @Override
+                                public void call(Boolean data) {
+                                    ref.removeEventListener(valueEventListener);
+                                    cb.call(0l);
+                                }
+                            });
+                        }
+                        else {
+                            ds.getRef().child("quantity").setValue(newQuantity.toString());
+                            cb.call(Long.valueOf(newQuantity));
+                        }
+                        ref.removeEventListener(this);
+                        return;
+                    }
+                }
+                cb.call(-1l);
+                ref.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                cb.call(-1l);
+                ref.removeEventListener(this);
             }
         });
     }

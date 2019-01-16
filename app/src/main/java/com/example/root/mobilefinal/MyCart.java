@@ -29,8 +29,8 @@ public class MyCart extends AppCompatActivity {
         rv_cartItem = findViewById(R.id.rv_cartItem);
     }
 
-    private void getTotalPrice(List<CartItem> cartItemList, final Backend.Callback<Integer> cb){
-        final Integer[] sum = {0};
+    private void getTotalPrice(List<CartItem> cartItemList, final Backend.Callback<Long> cb){
+        final Long[] sum = {0l};
         final Integer[] cnt = { cartItemList.size() };
         final Semaphore mut = new Semaphore(1);
         for (final CartItem item: cartItemList)
@@ -40,7 +40,7 @@ public class MyCart extends AppCompatActivity {
                     try {
                         mut.acquire();
                         cnt[0]--;
-                        sum[0] += Integer.valueOf(data.price) * Integer.valueOf(item.quantity);
+                        sum[0] += Long.valueOf(data.price) * Long.valueOf(item.quantity);
                         if (cnt[0] == 0) {
                             cb.call(sum[0]);
                         }
@@ -56,17 +56,25 @@ public class MyCart extends AppCompatActivity {
     private void setCartItem() {
         Backend.getCart(new Backend.Callback<List<CartItem>>() {
             @Override
-            public void call(List<CartItem> data) {
+            public void call(final List<CartItem> data) {
+
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rv_cartItem.setLayoutManager(linearLayoutManager);
-                rv_cartItem.setAdapter(new CardItemAdapter(getApplicationContext(), data));
-                getTotalPrice(data, new Backend.Callback<Integer>() {
+
+                Backend.Callback<Integer> onCartItemUpdated = new Backend.Callback<Integer>() {
                     @Override
-                    public void call(Integer data)  {
-                        textView_totalPrice.setText(data.toString() + " đ");
+                    public void call(Integer pos) {
+                        getTotalPrice(data, new Backend.Callback<Long>() {
+                            @Override
+                            public void call(Long data)  {
+                                textView_totalPrice.setText(data.toString() + " đ");
+                            }
+                        });
                     }
-                });
+                };
+
+                rv_cartItem.setAdapter(new CardItemAdapter(getApplicationContext(), data, onCartItemUpdated));
             }
         });
     }

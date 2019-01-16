@@ -45,23 +45,27 @@
         />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="277dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/editText_password"
         android:layout_marginTop="10dp"
+        android:gravity="end"
         android:id="@+id/layout_rememberandforgot">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remember me"
-            android:layout_marginRight="30dp"
-            android:id="@+id/checkbox_rememberme"/>
+
+        <!--<CheckBox-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Remember me"-->
+            <!--android:layout_marginRight="30dp"-->
+            <!--android:id="@+id/checkBox_rememberMe"/>-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Forgot password?"
+            android:gravity="right|end"
+
             android:id="@+id/tv_fogotpassword"/>
 
     </LinearLayout>

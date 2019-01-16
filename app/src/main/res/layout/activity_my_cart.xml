@@ -10,24 +10,26 @@
     <include layout="@layout/toolbar_mycart"
         android:id="@+id/toolbar_myCart"/>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_myCart">
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/toolbar_myCart">-->
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rv_cartItem"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_below="@id/toolbar_myCart">
 
         </android.support.v7.widget.RecyclerView>
-    </ScrollView>
+    <!--</ScrollView>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/rect_white">
 
         <RelativeLayout
             android:layout_width="match_parent"

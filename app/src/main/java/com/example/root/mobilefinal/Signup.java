@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,9 +33,10 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
     EditText editText_username, editText_password, editText_passwordConfirm;
     FirebaseAuth auth;
     FirebaseStorage storage;
-    TextView textView_uploadAvatar;
+    TextView textView_uploadAvatar, cancel;
     ImageView imageView_avatar;
     Bitmap chosenAvatar;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,14 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
     private void setView() {
         setFirebase();
 
+        toolbar = findViewById(R.id.toolbar_signup);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                finish();
+            }
+        });
         btn_signup = findViewById(R.id.btn_signup);
         editText_username = findViewById(R.id.editText_username);
         editText_password = findViewById(R.id.editText_password);
@@ -55,6 +65,9 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
 
         btn_signup.setOnClickListener(this);
         textView_uploadAvatar.setOnClickListener(this);
+
+        cancel = findViewById(R.id.cancel_action);
+        cancel.setOnClickListener(this);
     }
 
     private void setFirebase() {
@@ -108,6 +121,10 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         }
         else if (view == textView_uploadAvatar) {
             setAvatar();
+        }
+        else if (view == cancel){
+            onBackPressed();
+            finish();
         }
     }
 }
